@@ -134,6 +134,9 @@
 			glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
 			
 			aspect = (float)backingWidth/(float)backingHeight;
+
+      if(scene.currentCamera.fovSensitivity == kDefaultFovSensitivity)
+        scene.currentCamera.fovSensitivity = (aspect >= 1.0f ? backingWidth : backingHeight) * 10.0f;
 			
 			if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 			{
