@@ -135,8 +135,8 @@
 			
 			aspect = (float)backingWidth/(float)backingHeight;
 
-      if(scene.currentCamera.fovSensitivity == kDefaultFovSensitivity)
-        scene.currentCamera.fovSensitivity = (aspect >= 1.0f ? backingWidth : backingHeight) * 10.0f;
+			if(scene.currentCamera.fovSensitivity == kDefaultFovSensitivity)
+				scene.currentCamera.fovSensitivity = (aspect >= 1.0f ? backingWidth : backingHeight) * 10.0f;
 			
 			if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 			{
