@@ -191,6 +191,7 @@
             if(renderer)
             {
                 renderer.scene = scene;
+                [renderer resizeFromLayer];
                 [renderer start];
             }
             else

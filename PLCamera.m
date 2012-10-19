@@ -115,7 +115,7 @@
 
 -(void)addFovWithDistance:(float)distance;
 {
-	self.fov += ((distance < 0 ? distance / 2.5 : distance) / fovSensitivity);
+	self.fov += distance / fovSensitivity;
 }
 
 -(void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign
