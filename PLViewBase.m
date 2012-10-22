@@ -289,9 +289,10 @@
 	if(displayLink)
 	{
 		[displayLink invalidate];
+        [displayLink release];
 		displayLink = nil;
 	}
-	displayLink = value;
+	displayLink = [value retain];
 }
 
 -(void)setAnimationInterval:(NSTimeInterval)interval 
@@ -750,6 +751,7 @@
 				if(delegate && [delegate respondsToSelector:@selector(view:didEndMoving:endPoint:)])
 					[delegate view:self didEndMoving:startPoint endPoint:endPoint];
 			}
+            [self stopAnimation];
 		}
 	}
 	
