@@ -72,6 +72,14 @@ typedef enum
 
 typedef enum
 {
+    PLSpherical4FaceOrientationLeft = 0,
+    PLSpherical4FaceOrientationRight,
+    PLSpherical4FaceOrientationFront,
+    PLSpherical4FaceOrientationBack,
+} PLSpherical4FaceOrientation;
+
+typedef enum
+{
 	PLTransitionTypeFadeIn = 0,
 	PLTransitionTypeFadeOut
 } PLTransitionType;
