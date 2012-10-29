@@ -34,7 +34,7 @@
 
 +(id)panorama
 {
-    return [[[PLSpherical2Panorama alloc] init] autorelease];
+    return [[[PLSpherical4Panorama alloc] init] autorelease];
 }
 
 -(void)initializeValues
