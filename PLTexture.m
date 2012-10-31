@@ -127,8 +127,10 @@
 		return 256;
 	else if(dimension <= 512)
 		return 512;
-	else
+	else if(dimension <= 1024)
 		return 1024;
+	else
+		return 2048;
 }
 
 #pragma mark -
