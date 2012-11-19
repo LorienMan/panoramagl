@@ -118,7 +118,7 @@
 
 - (void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign
 {
-    [self addFovWithDistance:[PLMath distanceBetweenPoints:startPoint :endPoint] * (sign < 0 ? -1 : 1)];
+    [self addFovWithDistance:[PLMath distanceBetweenPoint:startPoint andPoint:endPoint] * (sign < 0 ? -1 : 1)];
 }
 
 #pragma mark -

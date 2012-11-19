@@ -164,6 +164,7 @@ static int sPreviewFacesOrder[] = {1, 3, 0, 2, 4, 5};
 - (void)addHotspot:(PLHotspot *)hotspot
 {
     [self addElement:hotspot];
+    hotspot.currentCamera = self.currentCamera;
 }
 
 - (void)removeHotspot:(PLHotspot *)hotspot

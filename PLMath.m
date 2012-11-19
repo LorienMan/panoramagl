@@ -31,9 +31,9 @@
 #pragma mark -
 #pragma mark distance methods
 
-+ (float)distanceBetweenPoints:(CGPoint)point1 :(CGPoint)point2;
++ (float)distanceBetweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2
 {
-    return sqrt(((point2.x - point1.x) * (point2.x - point1.x)) + ((point2.y - point1.y) * (point2.y - point1.y)));
+    return (float) sqrt(((point2.x - point1.x) * (point2.x - point1.x)) + ((point2.y - point1.y) * (point2.y - point1.y)));
 }
 
 #pragma mark -

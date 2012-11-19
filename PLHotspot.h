@@ -19,6 +19,8 @@
 #import "PLSceneElement.h"
 #import "PLVector3.h"
 
+@class PLCamera;
+
 @interface PLHotspot : PLSceneElement {
 #pragma mark -
 #pragma mark member variables
@@ -35,6 +37,8 @@
 
     BOOL isTouchBlock;
     PLHotspotTouchStatus touchStatus;
+
+    CGFloat _kRatio;
 }
 
 #pragma mark -
@@ -48,6 +52,7 @@
 @property (nonatomic, assign) float overAlpha, defaultOverAlpha;
 @property (nonatomic, readonly) PLHotspotTouchStatus touchStatus;
 @property (nonatomic, assign) BOOL isTouchBlock;
+@property (nonatomic, retain) PLCamera *currentCamera;
 
 #pragma mark -
 #pragma mark init methods

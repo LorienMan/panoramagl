@@ -23,7 +23,7 @@
 #pragma mark -
 #pragma mark distance methods
 
-+ (float)distanceBetweenPoints:(CGPoint)point1 :(CGPoint)point2;
++ (float)distanceBetweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2;
 
 #pragma mark -
 #pragma mark range methods

@@ -62,8 +62,6 @@
 
 @synthesize delegate;
 
-@synthesize isValidForTransition;
-
 @synthesize touchStatus;
 
 @synthesize isPointerVisible;
@@ -349,6 +347,8 @@
     if (scene && !isValidForFov && !isSensorialRotationRunning) {
         PLCamera *camera = scene.currentCamera;
         [camera rotateWithStartPoint:startPoint endPoint:endPoint];
+        // TODO: Fix me: Dirty hack to stop continuous rotation
+        startPoint = endPoint;
         if (delegate && [delegate respondsToSelector:@selector(view:didRotateCamera:rotation:)])
             [delegate view:self didRotateCamera:camera rotation:[camera getAbsoluteRotation]];
     }
@@ -451,11 +451,11 @@
 
         fovCounter++;
         if (fovCounter < kDefaultFovMinCounter) {
-            fovDistance = [PLMath distanceBetweenPoints: startFovPoint :endFovPoint];
+            fovDistance = [PLMath distanceBetweenPoint:startFovPoint andPoint:endFovPoint];
             return NO;
         }
 
-        float distance = [PLMath distanceBetweenPoints: startFovPoint :endFovPoint];
+        float distance = [PLMath distanceBetweenPoint:startFovPoint andPoint:endFovPoint];
 
         if (ABS(distance - fovDistance) < scene.currentCamera.minDistanceToEnableFov)
             return NO;
@@ -591,6 +591,7 @@
             }
             break;
         case 2:
+        default:
             touchStatus = PLTouchStatusDoubleTapCount;
             break;
     }
@@ -678,7 +679,7 @@
                 isNotCancelable = [delegate view:self shouldBeingScrolling:startPoint endPoint:endPoint];
 
             if (isScrollingEnabled && isNotCancelable) {
-                BOOL isValidForMove = ([PLMath distanceBetweenPoints: startPoint :endPoint] <= minDistanceToEnableScrolling);
+                BOOL isValidForMove = ([PLMath distanceBetweenPoint:startPoint andPoint:endPoint] <= minDistanceToEnableScrolling);
                 if (isInertiaEnabled) {
                     [self stopOnlyAnimation];
                     if (isValidForMove)
@@ -727,7 +728,7 @@
 - (void)startInertia
 {
     [self stopInertia];
-    float interval = inertiaInterval / [PLMath distanceBetweenPoints: startPoint :endPoint];
+    float interval = (float) (inertiaInterval / [PLMath distanceBetweenPoint:startPoint andPoint:endPoint]);
     if (interval < 0.01f) {
         inertiaStepValue = 0.01f / interval;
         interval = 0.01f;
@@ -819,7 +820,7 @@
                 lastAccelerometerPitch = pitch;
         }
         else
-            lastAccelerometerPitch = accelerometerPitch = pitch;
+            accelerometerPitch = lastAccelerometerPitch = pitch;
     }
 
     if (isBlocked || isSensorialRotationRunning || !scene || [self getIsValidForTransition])
@@ -839,8 +840,8 @@
         float factor = kAccelerometerMultiplyFactor * accelerometerSensitivity;
         UIInterfaceOrientation currentOrientation = [self currentDeviceOrientation];
         switch (currentOrientation) {
-            case UIDeviceOrientationPortrait:
-            case UIDeviceOrientationPortraitUpsideDown:
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationPortraitUpsideDown:
                 x = (isAccelerometerLeftRightEnabled ? acceleration.x : 0.0f);
                 y = (isAccelerometerUpDownEnabled ? acceleration.z : 0.0f);
                 startPoint = CGPointMake(self.bounds.size.width / 2.0f, self.bounds.size.height / 2.0f);
@@ -849,8 +850,8 @@
                     y = -y;
                 }
                 break;
-            case UIDeviceOrientationLandscapeLeft:
-            case UIDeviceOrientationLandscapeRight:
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
                 x = (isAccelerometerLeftRightEnabled ? -acceleration.y : 0.0f);
                 y = (isAccelerometerUpDownEnabled ? -acceleration.z : 0.0f);
                 startPoint = CGPointMake(self.bounds.size.height / 2.0f, self.bounds.size.width / 2.0f);
@@ -861,7 +862,7 @@
                 break;
         }
 
-        endPoint = CGPointMake(startPoint.x + (x * factor), startPoint.y + (y * factor));
+        endPoint = CGPointMake((CGFloat) (startPoint.x + (x * factor)), (CGFloat) (startPoint.y + (y * factor)));
         [self drawView];
 
         if (delegate && [delegate respondsToSelector:@selector(view:didAccelerate:withAccelerometer:)])
@@ -899,7 +900,8 @@
                 motionManager = nil;
             }
             if ([CLLocationManager headingAvailable]) {
-                lastAccelerometerPitch = accelerometerPitch = -1;
+                lastAccelerometerPitch = -1;
+                accelerometerPitch = -1;
                 firstMagneticHeading = magneticHeading = -1;
                 locationManager = [[CLLocationManager alloc] init];
                 locationManager.headingFilter = kCLHeadingFilterNone;
@@ -930,7 +932,7 @@
         CMAttitude *attitude = motionManager.deviceMotion.attitude;
         double pitch = attitude.pitch * 180.0 / M_PI - 90.0;
         double yaw = attitude.yaw * 180.0 / M_PI - 180.0;
-        [scene.currentCamera lookAtWithPitch:pitch yaw:yaw];
+        [scene.currentCamera lookAtWithPitch:(float) pitch yaw:(float) yaw];
     }
 }
 
@@ -950,11 +952,11 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)heading
 {
     if (firstMagneticHeading == -1) {
-        firstMagneticHeading = heading.magneticHeading;
+        firstMagneticHeading = (float) heading.magneticHeading;
         magneticHeading = 0.0f;
     }
     else if (lastAccelerometerPitch > 50)
-        magneticHeading = heading.magneticHeading - firstMagneticHeading;
+        magneticHeading = (float) (heading.magneticHeading - firstMagneticHeading);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -1009,9 +1011,9 @@
         long diffTime = (currentTime - shakeData.lastTime);
         shakeData.lastTime = currentTime;
 
-        shakeData.shakePosition.x = acceleration.x;
-        shakeData.shakePosition.y = acceleration.y;
-        shakeData.shakePosition.z = acceleration.z;
+        shakeData.shakePosition.x = (CGFloat) acceleration.x;
+        shakeData.shakePosition.y = (CGFloat) acceleration.y;
+        shakeData.shakePosition.z = (CGFloat) acceleration.z;
 
         float speed = ABS(shakeData.shakePosition.x + shakeData.shakePosition.y + shakeData.shakePosition.z - shakeData.shakeLastPosition.x - shakeData.shakeLastPosition.y - shakeData.shakeLastPosition.z) / diffTime * 10000;
         if (speed > shakeThreshold) {
@@ -1090,6 +1092,7 @@
     }
     if (scene)
         [scene release];
+    [locationManager release];
     [super dealloc];
 }
 

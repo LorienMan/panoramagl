@@ -18,10 +18,11 @@
 
 #import "PLSceneElementProtected.h"
 #import "PLHotspot.h"
+#import "PLCamera.h"
 
 @interface PLHotspot (Private)
 
-- (void)array:(GLfloat *)result :(int)size, ...;
+- (void)array:(GLfloat *)result size:(int)size, ...;
 
 - (PLPosition)convertPitchAndYawToPosition:(float)pitch yaw:(float)yaw;
 - (void)calculatePoints:(PLPosition[])result;
@@ -207,7 +208,7 @@
 #pragma mark -
 #pragma mark utility methods
 
-- (void)array:(GLfloat [])result :(int)size, ...
+- (void)array:(GLfloat [])result size:(int)size, ...
 {
     va_list args;
     va_start(args, size);
@@ -252,7 +253,7 @@
     [s normalize];
 
     //5.1
-    float w = width * kRatio, h = height * kRatio;
+    float w = width * _kRatio, h = height * _kRatio;
     double ratio = sqrt((w * w) + (h * h));
     //5.2
     double angle = 0;
@@ -277,6 +278,13 @@
 
 - (void)calculateCoords
 {
+    float ratio = kRatio * (-kFovMinValue + kDefaultFov) / (-kFovMinValue + _currentCamera.fov);
+    if (fabsf(_kRatio - ratio) > 0.01) {
+        _kRatio = ratio;
+        hasChangedCoordProperty = YES;
+        NSLog(@"_kRatio = %f, fov: %f, init: %f", _kRatio, _currentCamera.fov, kDefaultFov);
+    }
+
     if (!hasChangedCoordProperty)
         return;
 
@@ -290,18 +298,18 @@
     PLPosition position3 = positions[2];
     PLPosition position4 = positions[3];
 
-    [self array: cube :12,
-                       position1.x, position1.y, position1.z,
-                       position2.x, position2.y, position2.z,
-                       position3.x, position3.y, position3.z,
-                       position4.x, position4.y, position4.z
+    [self array:cube size:12,
+                          position1.x, position1.y, position1.z,
+                          position2.x, position2.y, position2.z,
+                          position3.x, position3.y, position3.z,
+                          position4.x, position4.y, position4.z
     ];
 
-    [self array: textureCoords :8,
-                                1.0f, 1.0f,
-                                0.0f, 1.0f,
-                                1.0f, 0.0f,
-                                0.0f, 0.0f
+    [self array:textureCoords size:8,
+                                   1.0f, 1.0f,
+                                   0.0f, 1.0f,
+                                   1.0f, 0.0f,
+                                   0.0f, 0.0f
     ];
 }
 
@@ -328,6 +336,8 @@
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
     glShadeModel(GL_SMOOTH);
+
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     glColor4f(1.0f, 1.0f, 1.0f, touchStatus == PLHotspotTouchStatusOut ? self.alpha : overAlpha);
 
@@ -383,7 +393,7 @@
 #pragma mark -
 #pragma mark clone methods
 
-- (void)clonePropertiesOf:(PLObject *)value
+- (void)clonePropertiesOf:(NSObject <PLIObject> *)value
 {
     if (value) {
         [super clonePropertiesOf:value];
