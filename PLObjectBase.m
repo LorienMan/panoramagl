@@ -23,23 +23,23 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)init
+- (id)init
 {
-	if(self = [super init])
-		[self initializeValues];
-	return self;
+    if (self = [super init])
+        [self initializeValues];
+    return self;
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
 }
 
 #pragma mark -
 #pragma mark native object methods
 
--(BOOL)isEqual:(id)object
+- (BOOL)isEqual:(id)object
 {
-	return (object && [self hash] == [object hash]);
+    return (object && [self hash] == [object hash]);
 }
 
 @end

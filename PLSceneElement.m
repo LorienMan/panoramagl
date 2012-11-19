@@ -23,101 +23,97 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithId:(long long)identifierValue
+- (id)initWithId:(long long)identifierValue
 {
-	if(self = [super init])
-		self.identifier = identifierValue;
-	return self;
+    if (self = [super init])
+        self.identifier = identifierValue;
+    return self;
 }
 
--(id)initWithId:(long long)identifierValue texture:(PLTexture *)texture
+- (id)initWithId:(long long)identifierValue texture:(PLTexture *)texture
 {
-	if(self = [super init])
-	{
-		self.identifier = identifierValue;
-		[self addTexture:texture];
-	}
-	return self;
+    if (self = [super init]) {
+        self.identifier = identifierValue;
+        [self addTexture:texture];
+    }
+    return self;
 }
 
--(id)initWithTexture:(PLTexture *)texture
+- (id)initWithTexture:(PLTexture *)texture
 {
-	if(self = [super init])
-		[self addTexture:texture];
-	return self;
+    if (self = [super init])
+        [self addTexture:texture];
+    return self;
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
-	textures = [[NSMutableArray alloc] init];
+    [super initializeValues];
+    textures = [[NSMutableArray alloc] init];
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(PLSceneElementType)getType
+- (PLSceneElementType)getType
 {
-	return PLSceneElementTypeObject;
+    return PLSceneElementTypeObject;
 }
 
--(NSMutableArray *)getTextures
+- (NSMutableArray *)getTextures
 {
-	return textures;
+    return textures;
 }
 
 #pragma mark -
 #pragma mark texture methods
 
--(void)addTexture:(PLTexture *)texture
+- (void)addTexture:(PLTexture *)texture
 {
-	if(texture)
-	{
-		[textures addObject:texture];
-		[self evaluateIfElementIsValid];
-	}
+    if (texture) {
+        [textures addObject:texture];
+        [self evaluateIfElementIsValid];
+    }
 }
 
--(void)removeTexture:(PLTexture *)texture
+- (void)removeTexture:(PLTexture *)texture
 {
-	if(texture)
-	{
-		[textures removeObject:texture];
-		[self evaluateIfElementIsValid];
-	}
+    if (texture) {
+        [textures removeObject:texture];
+        [self evaluateIfElementIsValid];
+    }
 }
 
--(void)removeTextureAtIndex:(NSUInteger)index
+- (void)removeTextureAtIndex:(NSUInteger)index
 {
-	[textures removeObjectAtIndex:index];
-	[self evaluateIfElementIsValid];
+    [textures removeObjectAtIndex:index];
+    [self evaluateIfElementIsValid];
 }
 
--(void)removeAllTextures
+- (void)removeAllTextures
 {
-	[textures removeAllObjects];
-	[self evaluateIfElementIsValid];
+    [textures removeAllObjects];
+    [self evaluateIfElementIsValid];
 }
 
 #pragma mark -
 #pragma mark eval methods
 
--(void)evaluateIfElementIsValid
+- (void)evaluateIfElementIsValid
 {
-	[self setIsValid:[textures count] > 0];
+    [self setIsValid:[textures count] > 0];
 }
 
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc
+- (void)dealloc
 {
-	if(textures)
-	{
-		[self removeAllTextures];
-		[textures release];
-	}
-	[super dealloc];
+    if (textures) {
+        [self removeAllTextures];
+        [textures release];
+    }
+    [super dealloc];
 }
 
 @end

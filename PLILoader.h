@@ -28,15 +28,15 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithString:(NSString *)string;
--(id)initWithPath:(NSString *)path;
+- (id)initWithString:(NSString *)string;
+- (id)initWithPath:(NSString *)path;
 
-+(id)loaderWithString:(NSString *)string;
-+(id)loaderWithPath:(NSString *)path;
++ (id)loaderWithString:(NSString *)string;
++ (id)loaderWithPath:(NSString *)path;
 
 #pragma mark -
 #pragma mark load methods
 
--(void)load:(UIView<PLIView> *)view;
+- (void)load:(UIView <PLIView> *)view;
 
 @end

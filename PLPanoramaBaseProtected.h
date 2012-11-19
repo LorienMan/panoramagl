@@ -19,18 +19,18 @@
 #import "PLSceneElementProtected.h"
 #import "PLPanoramaBase.h"
 
-@interface PLPanoramaBase(Protected)
+@interface PLPanoramaBase (Protected)
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, readonly, getter=getTextures) PLTexture **textures;
-@property(nonatomic, readonly, getter=getPreviewTextures) PLTexture **previewTextures;
+@property (nonatomic, readonly, getter=getTextures) PLTexture **textures;
+@property (nonatomic, readonly, getter=getPreviewTextures) PLTexture **previewTextures;
 
 #pragma mark -
 #pragma mark property methods
 
--(PLTexture **)getPreviewTextures;
--(PLTexture **)getTextures;
+- (PLTexture **)getPreviewTextures;
+- (PLTexture **)getTextures;
 
 @end

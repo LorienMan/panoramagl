@@ -30,9 +30,9 @@
 #pragma mark -
 #pragma mark check methods
 
-+(BOOL)checkLineBoxWithRay:(PLVector3 **)ray startBound:(PLVector3 *)startBound endBound:(PLVector3 *)endBound hitPoint:(PLVector3 **)hitPoint;
-+(BOOL)checkLineBoxWithRay:(PLVector3 **)ray point1:(PLVector3 *)point1 point2:(PLVector3 *)point2 point3:(PLVector3 *)point3 point4:(PLVector3 *)point4 hitPoint:(PLVector3 **)hitPoint;
-+(BOOL)checkLineTriangleWithRay:(PLVector3 **)ray firstVertex:(PLVector3 *)firstVertex secondVertex:(PLVector3 *)secondVertex thirdVertex:(PLVector3 *)thirdVertex hitPoint:(PLVector3 **)hitPoint;
++ (BOOL)checkLineBoxWithRay:(PLVector3 **)ray startBound:(PLVector3 *)startBound endBound:(PLVector3 *)endBound hitPoint:(PLVector3 **)hitPoint;
++ (BOOL)checkLineBoxWithRay:(PLVector3 **)ray point1:(PLVector3 *)point1 point2:(PLVector3 *)point2 point3:(PLVector3 *)point3 point4:(PLVector3 *)point4 hitPoint:(PLVector3 **)hitPoint;
++ (BOOL)checkLineTriangleWithRay:(PLVector3 **)ray firstVertex:(PLVector3 *)firstVertex secondVertex:(PLVector3 *)secondVertex thirdVertex:(PLVector3 *)thirdVertex hitPoint:(PLVector3 **)hitPoint;
 
 @end
 

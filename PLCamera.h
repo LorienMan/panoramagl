@@ -18,56 +18,55 @@
 
 #import "PLRenderableElementBase.h"
 
-@interface PLCamera : PLRenderableElementBase 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLCamera : PLRenderableElementBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	BOOL isFovEnabled;
-	float fov, fovFactor, fovSensitivity;
-	PLRange fovRange;
-	NSUInteger minDistanceToEnableFov;
-	PLRotation initialLookAt;
+    BOOL isFovEnabled;
+    float fov, fovFactor, fovSensitivity;
+    PLRange fovRange;
+    NSUInteger minDistanceToEnableFov;
+    PLRotation initialLookAt;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic) BOOL isFovEnabled;
-@property(nonatomic) float fov, fovSensitivity;
-@property(nonatomic, readonly) float fovFactor;
-@property(nonatomic, readonly, getter=getFOVFactorCorrected) float fovFactorCorrected;
-@property(nonatomic) PLRange fovRange;
-@property(nonatomic) NSUInteger minDistanceToEnableFov;
-@property(nonatomic) PLRotation initialLookAt;
-@property(nonatomic, readonly, getter=getAbsoluteRotation) PLRotation absoluteRotation;
+@property (nonatomic) BOOL isFovEnabled;
+@property (nonatomic) float fov, fovSensitivity;
+@property (nonatomic, readonly) float fovFactor;
+@property (nonatomic, readonly, getter=getFOVFactorCorrected) float fovFactorCorrected;
+@property (nonatomic) PLRange fovRange;
+@property (nonatomic) NSUInteger minDistanceToEnableFov;
+@property (nonatomic) PLRotation initialLookAt;
+@property (nonatomic, readonly, getter=getAbsoluteRotation) PLRotation absoluteRotation;
 
 #pragma mark -
 #pragma mark init methods
 
-+(id)camera;
++ (id)camera;
 
 #pragma mark -
 #pragma mark property methods
 
--(float)getFOVFactorCorrected;
--(PLRotation)getAbsoluteRotation;
+- (float)getFOVFactorCorrected;
+- (PLRotation)getAbsoluteRotation;
 
 #pragma mark -
 #pragma mark fov methods
 
--(void)addFovWithDistance:(float)distance;
--(void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign;
+- (void)addFovWithDistance:(float)distance;
+- (void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign;
 
 #pragma mark -
 #pragma mark lookat methods
 
--(void)setInitialLookAtWithPitch:(float)pitch yaw:(float)yaw;
--(void)lookAtWithPitch:(float)pitch yaw:(float)yaw;
+- (void)setInitialLookAtWithPitch:(float)pitch yaw:(float)yaw;
+- (void)lookAtWithPitch:(float)pitch yaw:(float)yaw;
 
 #pragma mark -
 #pragma mark clone methods
 
--(void)cloneCameraProperties:(PLCamera *)value;
+- (void)cloneCameraProperties:(PLCamera *)value;
 
 @end

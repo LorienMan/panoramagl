@@ -21,14 +21,13 @@
 #import "PLTexture.h"
 #import "PLLog.h"
 
-@interface PLPanoramaBase : PLScene <PLIPanorama>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLPanoramaBase : PLScene <PLIPanorama> {
+#pragma mark -
+#pragma mark member variables
 @private
 #if __has_feature(objc_arc)
-	PLTexture * __unsafe_unretained *previewTextures;
-	PLTexture * __unsafe_unretained *textures;
+    PLTexture *__unsafe_unretained *previewTextures;
+    PLTexture *__unsafe_unretained *textures;
 #else
 	PLTexture **previewTextures;
 	PLTexture **textures;

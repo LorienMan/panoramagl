@@ -25,6 +25,6 @@
 #pragma mark -
 #pragma mark init methods
 
--(void)initializeValues;
+- (void)initializeValues;
 
 @end

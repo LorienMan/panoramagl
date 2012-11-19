@@ -19,6 +19,6 @@
 #import "PLRenderableElementBaseProtected.h"
 #import "PLSceneElementBase.h"
 
-@interface PLSceneElementBase(Protected)
+@interface PLSceneElementBase (Protected)
 
 @end

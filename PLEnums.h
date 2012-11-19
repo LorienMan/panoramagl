@@ -19,102 +19,90 @@
 #pragma mark -
 #pragma mark enums definitions
 
-typedef enum
-{
+typedef enum {
     PLPanoramaTypeUnknow = 0,
-	PLPanoramaTypeCubic,
-	PLPanoramaTypeSpherical,
+    PLPanoramaTypeCubic,
+    PLPanoramaTypeSpherical,
     PLPanoramaTypeSpherical2,
     PLPanoramaTypeCylindrical,
 } PLPanoramaType;
 
-typedef enum
-{
+typedef enum {
     PLSensorTypeUnknow = 0,
-	PLSensorTypeGyroscope,
-	PLSensorTypeMagnetometer,
+    PLSensorTypeGyroscope,
+    PLSensorTypeMagnetometer,
 } PLSensorType;
 
-typedef enum
-{
+typedef enum {
     PLOpenGLVersionUnknow = 0,
     PLOpenGLVersion1_0,
-	PLOpenGLVersion1_1,
-	PLOpenGLVersion2_0,
+    PLOpenGLVersion1_1,
+    PLOpenGLVersion2_0,
 } PLOpenGLVersion;
 
-typedef enum
-{
-	PLTouchEventTypeBegan = 0,
-	PLTouchEventTypeMoved,
-	PLTouchEventTypeEnded
+typedef enum {
+    PLTouchEventTypeBegan = 0,
+    PLTouchEventTypeMoved,
+    PLTouchEventTypeEnded
 } PLTouchEventType;
 
-typedef enum
-{
-	PLCubeFaceOrientationFront  = 0,
-	PLCubeFaceOrientationBack   = 1,
-	PLCubeFaceOrientationLeft   = 2,
-	PLCubeFaceOrientationRight  = 3,
-	PLCubeFaceOrientationTop    = 4,
-	PLCubeFaceOrientationBottom = 5,
-    PLCubeFaceOrientationUp     = 4,
-	PLCubeFaceOrientationDown   = 5,
+typedef enum {
+    PLCubeFaceOrientationFront = 0,
+    PLCubeFaceOrientationBack = 1,
+    PLCubeFaceOrientationLeft = 2,
+    PLCubeFaceOrientationRight = 3,
+    PLCubeFaceOrientationTop = 4,
+    PLCubeFaceOrientationBottom = 5,
+    PLCubeFaceOrientationUp = 4,
+    PLCubeFaceOrientationDown = 5,
 } PLCubeFaceOrientation;
 
-typedef enum
-{
-	PLSpherical2FaceOrientationLeft = 0,
-	PLSpherical2FaceOrientationRight,
+typedef enum {
+    PLSpherical2FaceOrientationLeft = 0,
+    PLSpherical2FaceOrientationRight,
     PLSpherical2FaceOrientationFront,
     PLSpherical2FaceOrientationBack,
 } PLSpherical2FaceOrientation;
 
-typedef enum
-{
+typedef enum {
     PLSpherical4FaceOrientationLeft = 0,
     PLSpherical4FaceOrientationRight,
     PLSpherical4FaceOrientationFront,
     PLSpherical4FaceOrientationBack,
 } PLSpherical4FaceOrientation;
 
-typedef enum
-{
-	PLTransitionTypeFadeIn = 0,
-	PLTransitionTypeFadeOut
+typedef enum {
+    PLTransitionTypeFadeIn = 0,
+    PLTransitionTypeFadeOut
 } PLTransitionType;
 
-typedef enum
-{
-	PLTouchStatusNone = 0,
-	PLTouchStatusMoved,
-	PLTouchStatusEnded,
+typedef enum {
+    PLTouchStatusNone = 0,
+    PLTouchStatusMoved,
+    PLTouchStatusEnded,
     PLTouchStatusBegan,
-	PLTouchStatusFirstSingleTapCount,
-	PLTouchStatusSingleTapCount,
-	PLTouchStatusDoubleTapCount
+    PLTouchStatusFirstSingleTapCount,
+    PLTouchStatusSingleTapCount,
+    PLTouchStatusDoubleTapCount
 } PLTouchStatus;
 
-typedef enum 
-{
-	PLSceneElementTypeNone = 0,
-	PLSceneElementTypePanorama,
-	PLSceneElementTypeHotspot,
-	PLSceneElementTypeObject
+typedef enum {
+    PLSceneElementTypeNone = 0,
+    PLSceneElementTypePanorama,
+    PLSceneElementTypeHotspot,
+    PLSceneElementTypeObject
 } PLSceneElementType;
 
-typedef enum 
-{
-	PLHotspotTouchStatusOut = 0,
-	PLHotspotTouchStatusOver,
-	PLHotspotTouchStatusMove,
-	PLHotspotTouchDown
+typedef enum {
+    PLHotspotTouchStatusOut = 0,
+    PLHotspotTouchStatusOver,
+    PLHotspotTouchStatusMove,
+    PLHotspotTouchDown
 } PLHotspotTouchStatus;
 
-typedef enum
-{
-	PLTextureColorFormatUnknown =	0,
-	PLTextureColorFormatRGBA8888 =	1,
-	PLTextureColorFormatRGB565 =	2,
-	PLTextureColorFormatRGBA4444 =	3
+typedef enum {
+    PLTextureColorFormatUnknown = 0,
+    PLTextureColorFormatRGBA8888 = 1,
+    PLTextureColorFormatRGB565 = 2,
+    PLTextureColorFormatRGBA4444 = 3
 } PLTextureColorFormat;

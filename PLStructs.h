@@ -19,44 +19,38 @@
 #pragma mark -
 #pragma mark structs definitions
 
-struct PLRange 
-{
-	CGFloat min;
-	CGFloat max;
+struct PLRange {
+    CGFloat min;
+    CGFloat max;
 };
 typedef struct PLRange PLRange;
 
-struct PLVertex 
-{
-	CGFloat x, y, z;
+struct PLVertex {
+    CGFloat x, y, z;
 };
 typedef struct PLVertex PLVertex;
 typedef struct PLVertex PLPosition;
 
-struct PLRotation
-{
-	CGFloat pitch, yaw, roll;
+struct PLRotation {
+    CGFloat pitch, yaw, roll;
 };
 typedef struct PLRotation PLRotation;
 
-struct PLShakeData
-{
-	long lastTime;
-	PLPosition shakePosition;
-	PLPosition shakeLastPosition;
+struct PLShakeData {
+    long lastTime;
+    PLPosition shakePosition;
+    PLPosition shakeLastPosition;
 };
 typedef struct PLShakeData PLShakeData;
 
-struct PLRect
-{
-	PLPosition leftTop;
-	PLPosition rightBottom;
+struct PLRect {
+    PLPosition leftTop;
+    PLPosition rightBottom;
 };
 typedef struct PLRect PLRect;
 
-struct PLRGBA
-{
-	float red, green, blue, alpha;
+struct PLRGBA {
+    float red, green, blue, alpha;
 };
 typedef struct PLRGBA PLRGBA;
 
@@ -64,50 +58,43 @@ typedef struct PLRGBA PLRGBA;
 #pragma mark structs constructors
 
 CG_INLINE PLRange
-PLRangeMake(CGFloat min, CGFloat max)
-{
-	PLRange range = {min, max};
-	return range;
+PLRangeMake(CGFloat min, CGFloat max) {
+    PLRange range = {min, max};
+    return range;
 }
 
 CG_INLINE PLVertex
-PLVertexMake(CGFloat x, CGFloat y, CGFloat z)
-{
-	PLVertex vertex = {x, y, z};
-	return vertex;
+PLVertexMake(CGFloat x, CGFloat y, CGFloat z) {
+    PLVertex vertex = {x, y, z};
+    return vertex;
 }
 
 CG_INLINE PLPosition
-PLPositionMake(CGFloat x, CGFloat y, CGFloat z)
-{
-	PLPosition position = {x, y, z};
-	return position;
+PLPositionMake(CGFloat x, CGFloat y, CGFloat z) {
+    PLPosition position = {x, y, z};
+    return position;
 }
 
 CG_INLINE PLRotation
-PLRotationMake(CGFloat pitch, CGFloat yaw, CGFloat roll)
-{
-	PLRotation rotation = {pitch, yaw, roll};
-	return rotation;
+PLRotationMake(CGFloat pitch, CGFloat yaw, CGFloat roll) {
+    PLRotation rotation = {pitch, yaw, roll};
+    return rotation;
 }
 
 CG_INLINE PLShakeData
-PLShakeDataMake(long lastTime)
-{
-	PLShakeData shakeData = {lastTime, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-	return shakeData;
+PLShakeDataMake(long lastTime) {
+    PLShakeData shakeData = {lastTime, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    return shakeData;
 }
 
 CG_INLINE PLRect
-PLRectMake(CGFloat left, CGFloat top, CGFloat zLeftTop, CGFloat right, CGFloat bottom, CGFloat zRightBottom)
-{
-	PLRect rect = {left, top, zLeftTop, right, bottom, zRightBottom};
-	return rect;
+PLRectMake(CGFloat left, CGFloat top, CGFloat zLeftTop, CGFloat right, CGFloat bottom, CGFloat zRightBottom) {
+    PLRect rect = {left, top, zLeftTop, right, bottom, zRightBottom};
+    return rect;
 }
 
 CG_INLINE PLRGBA
-PLRGBAMake(float red, float green, float blue, float alpha)
-{
-	PLRGBA rgb = {red, green, blue, alpha};
-	return rgb;
+PLRGBAMake(float red, float green, float blue, float alpha) {
+    PLRGBA rgb = {red, green, blue, alpha};
+    return rgb;
 }

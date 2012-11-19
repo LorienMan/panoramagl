@@ -22,20 +22,20 @@
 
 #pragma mark -
 #pragma mark log methods
-	
-+(void)debug:(NSString *)tag format:(NSString *)format, ...
+
++ (void)debug:(NSString *)tag format:(NSString *)format, ...
 {
-	va_list args;
+    va_list args;
     va_start(args, format);
-	NSLog([[[NSString alloc] initWithFormat:format arguments:args] autorelease], nil);
+    NSLog([[[NSString alloc] initWithFormat:format arguments:args] autorelease], nil);
     va_end(args);
 }
-	
-+(void)error:(NSString *)tag format:(NSString *)format, ...
+
++ (void)error:(NSString *)tag format:(NSString *)format, ...
 {
-	va_list args;
+    va_list args;
     va_start(args, format);
-	NSLog([[[NSString alloc] initWithFormat:format arguments:args] autorelease], nil);
+    NSLog([[[NSString alloc] initWithFormat:format arguments:args] autorelease], nil);
     va_end(args);
 }
 

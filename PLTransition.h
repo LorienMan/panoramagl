@@ -22,41 +22,40 @@
 
 @protocol PLIView;
 
-@interface PLTransition : PLObjectBase
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLTransition : PLObjectBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	NSTimer *timer;
-	NSTimeInterval interval;
-	PLTransitionType type;
-	NSUInteger progressPercentage;
-	
-	UIView<PLIView> *view;
-	NSObject<PLIScene> *scene;
-	
-	BOOL isRunning;
-	
-	NSObject<PLTransitionDelegate> *delegate;
+    NSTimer *timer;
+    NSTimeInterval interval;
+    PLTransitionType type;
+    NSUInteger progressPercentage;
+
+    UIView <PLIView> *view;
+    NSObject <PLIScene> *scene;
+
+    BOOL isRunning;
+
+    NSObject <PLTransitionDelegate> *delegate;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) NSTimeInterval interval;
-@property(nonatomic, readonly) NSUInteger progressPercentage;
-@property(nonatomic, readonly) PLTransitionType type;
-@property(nonatomic, assign) NSObject<PLTransitionDelegate> *delegate;
+@property (nonatomic, assign) NSTimeInterval interval;
+@property (nonatomic, readonly) NSUInteger progressPercentage;
+@property (nonatomic, readonly) PLTransitionType type;
+@property (nonatomic, assign) NSObject <PLTransitionDelegate> *delegate;
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithInterval:(NSTimeInterval)interval type:(PLTransitionType)type;
+- (id)initWithInterval:(NSTimeInterval)interval type:(PLTransitionType)type;
 
 #pragma mark -
 #pragma mark control methods
 
--(BOOL)executeWithView:(UIView<PLIView> *)view scene:(NSObject<PLIScene> *)scene;
--(void)stop;
+- (BOOL)executeWithView:(UIView <PLIView> *)view scene:(NSObject <PLIScene> *)scene;
+- (void)stop;
 
 @end

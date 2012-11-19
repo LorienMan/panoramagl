@@ -19,22 +19,21 @@
 #import "PLTransition.h"
 #import "PLHotspot.h"
 
-@interface PLTransitionFadeBase : PLTransition
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLTransitionFadeBase : PLTransition {
+#pragma mark -
+#pragma mark member variables
 @private
-	float fadeStep;
+    float fadeStep;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) float fadeStep;
+@property (nonatomic, assign) float fadeStep;
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)resetSceneAlpha;
+- (void)resetSceneAlpha;
 
 @end

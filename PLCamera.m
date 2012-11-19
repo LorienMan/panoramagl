@@ -30,141 +30,139 @@
 #pragma mark -
 #pragma mark init methods
 
-+(id)camera
++ (id)camera
 {
-	return [[[PLCamera alloc] init] autorelease];
+    return [[[PLCamera alloc] init] autorelease];
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
-	fovRange = PLRangeMake(kDefaultFovMinValue, kDefaultFovMaxValue);
-	self.fov = kDefaultFov;
-	isFovEnabled = YES;
-	fovSensitivity = kDefaultFovSensitivity;
-	minDistanceToEnableFov = kDefaultMinDistanceToEnableFov;
-	initialLookAt = PLRotationMake(0.0f, 0.0f, 0.0f);
-	[super initializeValues];
+    fovRange = PLRangeMake(kDefaultFovMinValue, kDefaultFovMaxValue);
+    self.fov = kDefaultFov;
+    isFovEnabled = YES;
+    fovSensitivity = kDefaultFovSensitivity;
+    minDistanceToEnableFov = kDefaultMinDistanceToEnableFov;
+    initialLookAt = PLRotationMake(0.0f, 0.0f, 0.0f);
+    [super initializeValues];
     [self setIsReverseRotation:YES];
-	[self setIsValid:YES];
+    [self setIsValid:YES];
 }
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)reset
+- (void)reset
 {
-	self.fov = kDefaultFov;
-	[super reset];
-	[self lookAtWithPitch:initialLookAt.pitch yaw:initialLookAt.yaw];
+    self.fov = kDefaultFov;
+    [super reset];
+    [self lookAtWithPitch:initialLookAt.pitch yaw:initialLookAt.yaw];
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setFovRange:(PLRange)value
+- (void)setFovRange:(PLRange)value
 {
-	if(value.max >= value.min)
-	{			
-		fovRange = PLRangeMake(value.min < kFovMinValue ? kFovMinValue : value.min, value.max > kFovMaxValue ? kFovMaxValue : value.max);
-		self.fov = fov;
-	}
+    if (value.max >= value.min) {
+        fovRange = PLRangeMake(value.min < kFovMinValue ? kFovMinValue : value.min, value.max > kFovMaxValue ? kFovMaxValue : value.max);
+        self.fov = fov;
+    }
 }
 
--(void)setMinDistanceToEnableFov:(NSUInteger)value
+- (void)setMinDistanceToEnableFov:(NSUInteger)value
 {
-	if(value > 0)
-		minDistanceToEnableFov = value;
+    if (value > 0)
+        minDistanceToEnableFov = value;
 }
 
--(void)setFovSensitivity:(float)value
+- (void)setFovSensitivity:(float)value
 {
-	if(value > 0.0f)
-		fovSensitivity = value;
+    if (value > 0.0f)
+        fovSensitivity = value;
 }
 
--(void)setFov:(float)value
+- (void)setFov:(float)value
 {
-	if(isFovEnabled)
-	{
-		fov = [PLMath normalizeFov:value range:fovRange];
-		if(fov < 0.0f)
-			fovFactor = kFovFactorOffsetValue + kFovFactorNegativeOffsetValue * (fov / kDefaultFovFactorMinValue);
-		else if(fov >= 0.0f)
-			fovFactor = kFovFactorOffsetValue + kFovFactorPositiveOffsetValue * (fov / kDefaultFovFactorMaxValue);
-	}
+    if (isFovEnabled) {
+        fov = [PLMath normalizeFov:value range:fovRange];
+        if (fov < 0.0f)
+            fovFactor = kFovFactorOffsetValue + kFovFactorNegativeOffsetValue * (fov / kDefaultFovFactorMinValue);
+        else if (fov >= 0.0f)
+            fovFactor = kFovFactorOffsetValue + kFovFactorPositiveOffsetValue * (fov / kDefaultFovFactorMaxValue);
+    }
 }
 
--(float)getFOVFactorCorrected
+- (float)getFOVFactorCorrected
 {
-	float value = 1.0f;
-	if(fov < 0.0f)
-		value = kFovFactorOffsetValue + kFOVFactorCorrectedNegativeOffsetValue * (fov / kDefaultFOVFactorCorrectedMinValue);
-	else if(fov >= 0.0f)
-		value = kFovFactorOffsetValue + kFOVFactorCorrectedPositiveOffsetValue * (fov / kDefaultFOVFactorCorrectedMaxValue);
-	return value;
+    float value = 1.0f;
+    if (fov < 0.0f)
+        value = kFovFactorOffsetValue + kFOVFactorCorrectedNegativeOffsetValue * (fov / kDefaultFOVFactorCorrectedMinValue);
+    else if (fov >= 0.0f)
+        value = kFovFactorOffsetValue + kFOVFactorCorrectedPositiveOffsetValue * (fov / kDefaultFOVFactorCorrectedMaxValue);
+    return value;
 }
 
--(PLRotation)getAbsoluteRotation
+- (PLRotation)getAbsoluteRotation
 {
-	PLRotation rotation = self.rotation;
-	return PLRotationMake(-rotation.pitch, -rotation.yaw, rotation.roll);
+    PLRotation rotation = self.rotation;
+    return PLRotationMake(-rotation.pitch, -rotation.yaw, rotation.roll);
 }
 
 #pragma mark -
 #pragma mark fov methods
 
--(void)addFovWithDistance:(float)distance;
+- (void)addFovWithDistance:(float)distance;
 {
-	self.fov += distance / fovSensitivity;
+    self.fov += distance / fovSensitivity;
 }
 
--(void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign
+- (void)addFovWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sign:(int)sign
 {
-	[self addFovWithDistance: [PLMath distanceBetweenPoints:startPoint :endPoint] * (sign < 0 ? -1 : 1)];
+    [self addFovWithDistance:[PLMath distanceBetweenPoints:startPoint :endPoint] * (sign < 0 ? -1 : 1)];
 }
 
 #pragma mark -
 #pragma mark render methods
 
--(void)beginRender
+- (void)beginRender
 {
-	[self rotate];
-	[self translate];
+    [self rotate];
+    [self translate];
 }
 
--(void)endRender
+- (void)endRender
 {
 }
 
--(void)internalRender
+- (void)internalRender
 {
 }
 
 #pragma mark -
 #pragma mark lookat methods
 
--(void)lookAtWithPitch:(float)pitch yaw:(float)yaw
+- (void)lookAtWithPitch:(float)pitch yaw:(float)yaw
 {
-	[self rotateWithPitch:-pitch yaw:-yaw];
+    [self rotateWithPitch:-pitch yaw:-yaw];
 }
 
--(void)setInitialLookAtWithPitch:(float)pitch yaw:(float)yaw
+- (void)setInitialLookAtWithPitch:(float)pitch yaw:(float)yaw
 {
-	initialLookAt.pitch = pitch;
-	initialLookAt.yaw = yaw;
+    initialLookAt.pitch = pitch;
+    initialLookAt.yaw = yaw;
 }
 
 #pragma mark -
 #pragma mark clone methods
 
--(void)cloneCameraProperties:(PLCamera *)value
+- (void)cloneCameraProperties:(PLCamera *)value
 {
-	[super clonePropertiesOf:(PLObject *)value];
-	fovRange = value.fovRange;
-	isFovEnabled = value.isFovEnabled;
-	fovSensitivity = value.fovSensitivity;
-	minDistanceToEnableFov = value.minDistanceToEnableFov;
-	self.fov = value.fov;
+    [super clonePropertiesOf:(PLObject *) value];
+    fovRange = value.fovRange;
+    isFovEnabled = value.isFovEnabled;
+    fovSensitivity = value.fovSensitivity;
+    minDistanceToEnableFov = value.minDistanceToEnableFov;
+    self.fov = value.fov;
 }
 
 @end

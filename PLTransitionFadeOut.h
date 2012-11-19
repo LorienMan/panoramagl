@@ -18,14 +18,13 @@
 
 #import "PLTransitionFadeBase.h"
 
-@interface PLTransitionFadeOut : PLTransitionFadeBase
-{
+@interface PLTransitionFadeOut : PLTransitionFadeBase {
 }
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithInterval:(NSTimeInterval)interval;
-+(id)transitionWithInterval:(NSTimeInterval)interval;
+- (id)initWithInterval:(NSTimeInterval)interval;
++ (id)transitionWithInterval:(NSTimeInterval)interval;
 
 @end

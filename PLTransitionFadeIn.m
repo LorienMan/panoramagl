@@ -24,14 +24,14 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithInterval:(NSTimeInterval)intervalValue
+- (id)initWithInterval:(NSTimeInterval)intervalValue
 {
-	return [super initWithInterval:intervalValue type:PLTransitionTypeFadeIn];
+    return [super initWithInterval:intervalValue type:PLTransitionTypeFadeIn];
 }
 
-+(id)transitionWithInterval:(NSTimeInterval)interval
++ (id)transitionWithInterval:(NSTimeInterval)interval
 {
-	return [[[PLTransitionFadeIn alloc] initWithInterval:interval] autorelease];
+    return [[[PLTransitionFadeIn alloc] initWithInterval:interval] autorelease];
 }
 
 @end

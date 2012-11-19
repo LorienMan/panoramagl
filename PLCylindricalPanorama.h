@@ -18,10 +18,9 @@
 
 #import "PLPanoramaBase.h"
 
-@interface PLCylindricalPanorama : PLPanoramaBase
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLCylindricalPanorama : PLPanoramaBase {
+#pragma mark -
+#pragma mark member variables
 @private
     NSUInteger divs;
     GLUquadric *quadratic;
@@ -32,16 +31,16 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic) NSUInteger divs;
+@property (nonatomic) NSUInteger divs;
 
-@property(nonatomic) BOOL isHeightCalculated;
-@property(nonatomic) float height;
+@property (nonatomic) BOOL isHeightCalculated;
+@property (nonatomic) float height;
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setImage:(PLImage *)image;
+- (void)setImage:(PLImage *)image;
 
--(void)setTexture:(PLTexture *)texture;
+- (void)setTexture:(PLTexture *)texture;
 
 @end

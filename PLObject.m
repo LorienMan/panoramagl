@@ -34,204 +34,204 @@
 #pragma mark -
 #pragma mark init methods
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
-	xRange = yRange = zRange = PLRangeMake(kFloatMinValue, kFloatMaxValue);
-	
-	pitchRange = PLRangeMake(kDefaultPitchMinRange, kDefaultPitchMaxRange);
-	yawRange = PLRangeMake(kDefaultYawMinRange, kDefaultYawMaxRange);
-	rollRange = PLRangeMake(kDefaultRotateMinRange, kDefaultRotateMaxRange);
-	
-	isXAxisEnabled = isYAxisEnabled = isZAxisEnabled = YES;
-	isPitchEnabled = isYawEnabled = isRollEnabled = YES;
-	
-	rotateSensitivity = kDefaultRotateSensitivity;	
-	isReverseRotation = NO;
-	
-	isYZAxisInverseRotation = YES;
-	
-	position = PLPositionMake(0.0f, 0.0f, 0.0f);
-	
-	defaultAlpha = kObjectDefaultAlpha;
-	
-	[self reset];
+    [super initializeValues];
+    xRange = yRange = zRange = PLRangeMake(kFloatMinValue, kFloatMaxValue);
+
+    pitchRange = PLRangeMake(kDefaultPitchMinRange, kDefaultPitchMaxRange);
+    yawRange = PLRangeMake(kDefaultYawMinRange, kDefaultYawMaxRange);
+    rollRange = PLRangeMake(kDefaultRotateMinRange, kDefaultRotateMaxRange);
+
+    isXAxisEnabled = isYAxisEnabled = isZAxisEnabled = YES;
+    isPitchEnabled = isYawEnabled = isRollEnabled = YES;
+
+    rotateSensitivity = kDefaultRotateSensitivity;
+    isReverseRotation = NO;
+
+    isYZAxisInverseRotation = YES;
+
+    position = PLPositionMake(0.0f, 0.0f, 0.0f);
+
+    defaultAlpha = kObjectDefaultAlpha;
+
+    [self reset];
 }
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)reset
+- (void)reset
 {
-	rotation = PLRotationMake(0.0f, 0.0f, 0.0f);
-	alpha = defaultAlpha;
+    rotation = PLRotationMake(0.0f, 0.0f, 0.0f);
+    alpha = defaultAlpha;
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setPosition:(PLPosition)value
+- (void)setPosition:(PLPosition)value
 {
-	[self setX:value.x];
-	[self setY:value.y];
-	[self setZ:value.z];
+    [self setX:value.x];
+    [self setY:value.y];
+    [self setZ:value.z];
 }
 
--(float)getX
+- (float)getX
 {
-	return position.x;
+    return position.x;
 }
 
--(void)setX:(float)value
+- (void)setX:(float)value
 {
-	if(isXAxisEnabled)
-		position.x = [PLMath valueInRange:value range:xRange];
+    if (isXAxisEnabled)
+        position.x = [PLMath valueInRange:value range:xRange];
 }
 
--(float)getY
+- (float)getY
 {
-	return position.y;
+    return position.y;
 }
 
--(void)setY:(float)value
+- (void)setY:(float)value
 {
-	if(isYAxisEnabled)
-		position.y = [PLMath valueInRange:value range:yRange];
+    if (isYAxisEnabled)
+        position.y = [PLMath valueInRange:value range:yRange];
 }
 
--(float)getZ
+- (float)getZ
 {
-	return position.z;
+    return position.z;
 }
 
--(void)setZ:(float)value
+- (void)setZ:(float)value
 {
-	if(isZAxisEnabled)
-		position.z = [PLMath valueInRange:value range:zRange];
+    if (isZAxisEnabled)
+        position.z = [PLMath valueInRange:value range:zRange];
 }
 
--(void)setRotation:(PLRotation)value
+- (void)setRotation:(PLRotation)value
 {
-	[self setPitch:value.pitch];
-	[self setYaw:value.yaw];
-	[self setRoll:value.roll];
+    [self setPitch:value.pitch];
+    [self setYaw:value.yaw];
+    [self setRoll:value.roll];
 }
 
--(float)getPitch
+- (float)getPitch
 {
-	return rotation.pitch;
+    return rotation.pitch;
 }
 
--(void)setPitch:(float)value
+- (void)setPitch:(float)value
 {
-	if(isPitchEnabled)
-		rotation.pitch = [PLMath normalizeAngle:value range:pitchRange];
+    if (isPitchEnabled)
+        rotation.pitch = [PLMath normalizeAngle:value range:pitchRange];
 }
 
--(float)getYaw
+- (float)getYaw
 {
-	return rotation.yaw;
+    return rotation.yaw;
 }
 
--(void)setYaw:(float)value
+- (void)setYaw:(float)value
 {
-	if(isYawEnabled)
-		rotation.yaw = [PLMath normalizeAngle:value range:PLRangeMake(-yawRange.max, -yawRange.min)];
+    if (isYawEnabled)
+        rotation.yaw = [PLMath normalizeAngle:value range:PLRangeMake(-yawRange.max, -yawRange.min)];
 }
 
--(float)getRoll
+- (float)getRoll
 {
-	return rotation.roll;
+    return rotation.roll;
 }
 
--(void)setRoll:(float)value
+- (void)setRoll:(float)value
 {
-	if(isRollEnabled)
-		rotation.roll = [PLMath normalizeAngle:value range:rollRange];
+    if (isRollEnabled)
+        rotation.roll = [PLMath normalizeAngle:value range:rollRange];
 }
 
--(void)setDefaultAlpha:(float)value
+- (void)setDefaultAlpha:(float)value
 {
-	defaultAlpha = value;
-	alpha = value;
+    defaultAlpha = value;
+    alpha = value;
 }
 
 #pragma mark -
 #pragma mark translate methods
 
--(void)translateWithX:(float)xValue y:(float)yValue
+- (void)translateWithX:(float)xValue y:(float)yValue
 {
-	position.x = xValue;
-	position.y = yValue;
+    position.x = xValue;
+    position.y = yValue;
 }
 
--(void)translateWithX:(float)xValue y:(float)yValue z:(float)zValue
+- (void)translateWithX:(float)xValue y:(float)yValue z:(float)zValue
 {
-	position = PLPositionMake(xValue, yValue, zValue);
+    position = PLPositionMake(xValue, yValue, zValue);
 }
 
 #pragma mark -
 #pragma mark rotate methods
 
--(void)rotateWithPitch:(float)pitchValue yaw:(float)yawValue
+- (void)rotateWithPitch:(float)pitchValue yaw:(float)yawValue
 {
-	self.pitch = pitchValue;
-	self.yaw = yawValue;
+    self.pitch = pitchValue;
+    self.yaw = yawValue;
 }
 
--(void)rotateWithPitch:(float)pitchValue yaw:(float)yawValue roll:(float)rollValue
+- (void)rotateWithPitch:(float)pitchValue yaw:(float)yawValue roll:(float)rollValue
 {
-	self.rotation = PLRotationMake(pitchValue, yawValue, rollValue);
+    self.rotation = PLRotationMake(pitchValue, yawValue, rollValue);
 }
 
--(void)rotateWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
+- (void)rotateWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
 {
-	[self rotateWithStartPoint:startPoint endPoint:endPoint sensitivity:rotateSensitivity];
+    [self rotateWithStartPoint:startPoint endPoint:endPoint sensitivity:rotateSensitivity];
 }
 
--(void)rotateWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sensitivity:(float)sensitivity
+- (void)rotateWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint sensitivity:(float)sensitivity
 {
-	self.pitch += (endPoint.y - startPoint.y) / sensitivity;
-	self.yaw += (startPoint.x - endPoint.x) / sensitivity;
+    self.pitch += (endPoint.y - startPoint.y) / sensitivity;
+    self.yaw += (startPoint.x - endPoint.x) / sensitivity;
 }
 
 #pragma mark -
 #pragma mark clone methods
 
--(void)clonePropertiesOf:(NSObject<PLIObject> *)value
-{	
-	self.isXAxisEnabled = value.isXAxisEnabled;
-	self.isYAxisEnabled = value.isYAxisEnabled;
-	self.isZAxisEnabled = value.isZAxisEnabled;
-	
-	self.isPitchEnabled = value.isPitchEnabled;
-	self.isYawEnabled = value.isYawEnabled;
-	self.isRollEnabled = value.isRollEnabled;
-	
-	self.isReverseRotation = value.isReverseRotation;
-	
-	self.isYZAxisInverseRotation = value.isYZAxisInverseRotation;
-	
-	self.rotateSensitivity = value.rotateSensitivity;
-	
-	self.xRange = value.xRange;
-	self.yRange = value.yRange;
-	self.zRange = value.zRange;
-	
-	self.pitchRange = value.pitchRange;
-	self.yawRange = value.yawRange;
-	self.rollRange = value.rollRange;
-	
-	self.x = value.x;
-	self.y = value.y;
-	self.z = value.z;
-	
-	self.pitch = value.pitch;
-	self.yaw = value.yaw;
-	self.roll = value.roll;
-	
-	self.defaultAlpha = value.defaultAlpha;
-	self.alpha = value.alpha;
+- (void)clonePropertiesOf:(NSObject <PLIObject> *)value
+{
+    self.isXAxisEnabled = value.isXAxisEnabled;
+    self.isYAxisEnabled = value.isYAxisEnabled;
+    self.isZAxisEnabled = value.isZAxisEnabled;
+
+    self.isPitchEnabled = value.isPitchEnabled;
+    self.isYawEnabled = value.isYawEnabled;
+    self.isRollEnabled = value.isRollEnabled;
+
+    self.isReverseRotation = value.isReverseRotation;
+
+    self.isYZAxisInverseRotation = value.isYZAxisInverseRotation;
+
+    self.rotateSensitivity = value.rotateSensitivity;
+
+    self.xRange = value.xRange;
+    self.yRange = value.yRange;
+    self.zRange = value.zRange;
+
+    self.pitchRange = value.pitchRange;
+    self.yawRange = value.yawRange;
+    self.rollRange = value.rollRange;
+
+    self.x = value.x;
+    self.y = value.y;
+    self.z = value.z;
+
+    self.pitch = value.pitch;
+    self.yaw = value.yaw;
+    self.roll = value.roll;
+
+    self.defaultAlpha = value.defaultAlpha;
+    self.alpha = value.alpha;
 }
 
 @end

@@ -25,12 +25,12 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic) BOOL isVisible;
-@property(nonatomic, readonly) BOOL isValid;
+@property (nonatomic) BOOL isVisible;
+@property (nonatomic, readonly) BOOL isValid;
 
 #pragma mark -
 #pragma mark render methods
 
--(BOOL)render;
+- (BOOL)render;
 
 @end

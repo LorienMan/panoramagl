@@ -28,12 +28,11 @@
 #import "PLSpherical2Panorama.h"
 #import "PLCylindricalPanorama.h"
 
-@interface PLView : PLViewBase 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLView : PLViewBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	UIActivityIndicatorView *progressBar;
+    UIActivityIndicatorView *progressBar;
 }
 
 @end

@@ -19,31 +19,31 @@
 #import "PLObjectProtected.h"
 #import "PLRenderableElementBase.h"
 
-@interface PLRenderableElementBase(Protected)
+@interface PLRenderableElementBase (Protected)
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setIsValid:(BOOL)value;
+- (void)setIsValid:(BOOL)value;
 
 #pragma mark -
 #pragma mark action methods
 
--(void)translate;
--(void)rotate;
--(void)internalRotate:(PLRotation)rotationValue;
+- (void)translate;
+- (void)rotate;
+- (void)internalRotate:(PLRotation)rotationValue;
 
 #pragma mark -
 #pragma mark render methods
 
--(void)beginRender;
--(void)endRender;
--(void)internalRender;
+- (void)beginRender;
+- (void)endRender;
+- (void)internalRender;
 
 #pragma mark -
 #pragma mark alpha methods
 
--(void)beginAlpha;
--(void)endAlpha;
+- (void)beginAlpha;
+- (void)endAlpha;
 
 @end

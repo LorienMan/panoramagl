@@ -21,190 +21,175 @@
 #pragma mark -
 #pragma mark static variables
 
-static int sPreviewFacesOrder[] = { 1, 3, 0, 2, 4, 5 };
+static int sPreviewFacesOrder[] = {1, 3, 0, 2, 4, 5};
 
 @implementation PLPanoramaBase
 
 #pragma mark -
 #pragma mark init methods
 
-+(id)panorama
++ (id)panorama
 {
     return nil;
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
-	int sides = [self getSides];
+    [super initializeValues];
+    int sides = [self getSides];
     int previewSides = [self getPreviewSides];
-	textures = (PLTexture **)malloc(sizeof(PLTexture *) * sides);
-	previewTextures = (PLTexture **)malloc(sizeof(PLTexture *) * previewSides);
+    textures = (PLTexture **) malloc(sizeof(PLTexture *) * sides);
+    previewTextures = (PLTexture **) malloc(sizeof(PLTexture *) * previewSides);
     int i;
-	for(i = 0; i < sides; i++)
-		textures[i] = nil;
-	for(i = 0; i < previewSides; i++)
+    for (i = 0; i < sides; i++)
+        textures[i] = nil;
+    for (i = 0; i < previewSides; i++)
         previewTextures[i] = nil;
-	[self setIsValid:YES];
+    [self setIsValid:YES];
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(PLTexture **)getTextures
+- (PLTexture **)getTextures
 {
-	return textures;
+    return textures;
 }
 
--(int)getPreviewSides
+- (int)getPreviewSides
 {
     return 1;
 }
 
--(int)getSides
+- (int)getSides
 {
-	return 1;
+    return 1;
 }
 
 #pragma mark -
 #pragma mark preview texture methods
 
--(PLTexture **)getPreviewTextures
+- (PLTexture **)getPreviewTextures
 {
-	return previewTextures;
+    return previewTextures;
 }
 
--(void)setPreviewImage:(PLImage *)value
+- (void)setPreviewImage:(PLImage *)value
 {
-	@synchronized(self)
-	{
-		[self removeAllPreviewTextures];
-		if(value && [value isValid])
-		{
-			value = [value retain];
-			int width = [value getWidth];
-			int height = [value getHeight];
-			if([PLMath isPowerOfTwo:width] && (height % width == 0 || width % height == 0))
-			{
-				int sides = [self getPreviewSides], counter = 0;
-				BOOL isSideByDefault = (sides == 1);
-				for(int i = 0; i < sides; i++)
-				{
-					@try
-					{
-						PLImage *subImage = [value getSubImageWithRect:CGRectMake(0, ((isSideByDefault ? i : sPreviewFacesOrder[i]) * width), width, (isSideByDefault ? height : width))];
-						previewTextures[counter++] = [[PLTexture alloc] initWithImage:subImage];
-					}
-					@catch(NSException *e)
-					{
-						[self removeAllPreviewTextures];
-						[PLLog error:@"PLPanoramaBase::setPreviewTexture" format:@"setPreviewTexture fails: %@", e.reason];
-						break;
-					}
-				}
-			}
-			[value release];
-		}
-	}
+    @synchronized (self) {
+        [self removeAllPreviewTextures];
+        if (value && [value isValid]) {
+            value = [value retain];
+            int width = [value getWidth];
+            int height = [value getHeight];
+            if ([PLMath isPowerOfTwo:width] && (height % width == 0 || width % height == 0)) {
+                int sides = [self getPreviewSides], counter = 0;
+                BOOL isSideByDefault = (sides == 1);
+                for (int i = 0; i < sides; i++) {
+                    @try {
+                        PLImage *subImage = [value getSubImageWithRect:CGRectMake(0, ((isSideByDefault ? i : sPreviewFacesOrder[i]) * width), width, (isSideByDefault ? height : width))];
+                        previewTextures[counter++] = [[PLTexture alloc] initWithImage:subImage];
+                    }
+                    @catch (NSException *e) {
+                        [self removeAllPreviewTextures];
+                        [PLLog error:@"PLPanoramaBase::setPreviewTexture" format:@"setPreviewTexture fails: %@", e.reason];
+                        break;
+                    }
+                }
+            }
+            [value release];
+        }
+    }
 }
 
 #pragma mark -
 #pragma mark remove texture methods
 
--(void)removePreviewTextureAtIndex:(NSUInteger)index
+- (void)removePreviewTextureAtIndex:(NSUInteger)index
 {
-    @synchronized(self)
-    {
-        if(index < [self getPreviewSides])
-        {
+    @synchronized (self) {
+        if (index < [self getPreviewSides]) {
             PLTexture *texture = previewTextures[index];
-            if(texture)
-            {
+            if (texture) {
                 [texture recycle];
-				[texture release];
-				previewTextures[index] = nil;
+                [texture release];
+                previewTextures[index] = nil;
             }
         }
     }
 }
 
--(void)removeAllPreviewTextures
+- (void)removeAllPreviewTextures
 {
-	@synchronized(self)
-	{
-		int sides = [self getPreviewSides];
-		for(int i = 0; i < sides; i++)
-		{
-			PLTexture *texture = previewTextures[i];
-			if(texture)
-			{
-				[texture recycle];
-				[texture release];
-				previewTextures[i] = nil;
-			}
-		}
-	}
+    @synchronized (self) {
+        int sides = [self getPreviewSides];
+        for (int i = 0; i < sides; i++) {
+            PLTexture *texture = previewTextures[i];
+            if (texture) {
+                [texture recycle];
+                [texture release];
+                previewTextures[i] = nil;
+            }
+        }
+    }
 }
 
--(void)removeAllTextures
+- (void)removeAllTextures
 {
-	@synchronized(self)
-	{
-		int sides = [self getSides];
-		for(int i = 0; i < sides; i++)
-		{
-			PLTexture *texture = textures[i];
-			if(texture)
-			{
-				[texture release];
-				textures[i] = nil;
-			}
-		}
-	}
+    @synchronized (self) {
+        int sides = [self getSides];
+        for (int i = 0; i < sides; i++) {
+            PLTexture *texture = textures[i];
+            if (texture) {
+                [texture release];
+                textures[i] = nil;
+            }
+        }
+    }
 }
 
 #pragma mark -
 #pragma mark clear methods
 
--(void)clearPanorama
+- (void)clearPanorama
 {
     [self removeAllPreviewTextures];
-	[self removeAllTextures];
+    [self removeAllTextures];
     [self removeAllHotspots];
 }
 
 #pragma mark -
 #pragma mark hotspot methods
 
--(void)addHotspot:(PLHotspot *)hotspot
+- (void)addHotspot:(PLHotspot *)hotspot
 {
-	[self addElement:hotspot];
+    [self addElement:hotspot];
 }
 
--(void)removeHotspot:(PLHotspot *)hotspot
+- (void)removeHotspot:(PLHotspot *)hotspot
 {
-	[self removeElement:hotspot];
+    [self removeElement:hotspot];
 }
 
--(void)removeHotspotAtIndex:(NSUInteger)index
+- (void)removeHotspotAtIndex:(NSUInteger)index
 {
-	[self removeElementAtIndex:index];
+    [self removeElementAtIndex:index];
 }
 
--(void)removeAllHotspots
+- (void)removeAllHotspots
 {
-	[self removeAllElements];
+    [self removeAllElements];
 }
 
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc
+- (void)dealloc
 {
-	[self clearPanorama];
-	free(previewTextures);
-	free(textures);
-	[super dealloc];
-}					 
+    [self clearPanorama];
+    free(previewTextures);
+    free(textures);
+    [super dealloc];
+}
 
 @end

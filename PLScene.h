@@ -19,29 +19,28 @@
 #import "PLRenderableElementBase.h"
 #import "PLIScene.h"
 
-@interface PLScene : PLRenderableElementBase <PLIScene>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLScene : PLRenderableElementBase <PLIScene> {
+#pragma mark -
+#pragma mark member variables
 @private
-	NSMutableArray *cameras;
-	PLCamera *currentCamera;
-	NSUInteger cameraIndex;
-	NSMutableArray *elements;
-	UIView<PLIView> *view;
+    NSMutableArray *cameras;
+    PLCamera *currentCamera;
+    NSUInteger cameraIndex;
+    NSMutableArray *elements;
+    UIView <PLIView> *view;
 }
 
 #pragma mark -
 #pragma mark init methods
 
-+(id)scene;
-+(id)sceneWithCamera:(PLCamera *)camera;
-+(id)sceneWithElement:(PLSceneElement *)element;
-+(id)sceneWithElement:(PLSceneElement *)element camera:(PLCamera *)camera;
++ (id)scene;
++ (id)sceneWithCamera:(PLCamera *)camera;
++ (id)sceneWithElement:(PLSceneElement *)element;
++ (id)sceneWithElement:(PLSceneElement *)element camera:(PLCamera *)camera;
 
-+(id)sceneWithView:(UIView<PLIView> *)view;
-+(id)sceneWithView:(UIView<PLIView> *)view camera:(PLCamera *)camera;
-+(id)sceneWithView:(UIView<PLIView> *)view element:(PLSceneElement *)element;
-+(id)sceneWithView:(UIView<PLIView> *)view element:(PLSceneElement *)element camera:(PLCamera *)camera;
++ (id)sceneWithView:(UIView <PLIView> *)view;
++ (id)sceneWithView:(UIView <PLIView> *)view camera:(PLCamera *)camera;
++ (id)sceneWithView:(UIView <PLIView> *)view element:(PLSceneElement *)element;
++ (id)sceneWithView:(UIView <PLIView> *)view element:(PLSceneElement *)element camera:(PLCamera *)camera;
 
 @end

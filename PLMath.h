@@ -23,22 +23,22 @@
 #pragma mark -
 #pragma mark distance methods
 
-+(float)distanceBetweenPoints:(CGPoint)point1 :(CGPoint)point2;
++ (float)distanceBetweenPoints:(CGPoint)point1 :(CGPoint)point2;
 
 #pragma mark -
 #pragma mark range methods
 
-+(float)valueInRange:(float)value range:(PLRange)range;
++ (float)valueInRange:(float)value range:(PLRange)range;
 
 #pragma mark -
 #pragma mark normalize methods
 
-+(float)normalizeAngle:(float)angle range:(PLRange)range;
-+(float)normalizeFov:(float)fov range:(PLRange)range;
++ (float)normalizeAngle:(float)angle range:(PLRange)range;
++ (float)normalizeFov:(float)fov range:(PLRange)range;
 
 #pragma mark -
 #pragma mark pow methods
 
-+(BOOL)isPowerOfTwo:(int)value;
++ (BOOL)isPowerOfTwo:(int)value;
 
 @end

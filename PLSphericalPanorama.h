@@ -18,25 +18,24 @@
 
 #import "PLPanoramaBase.h"
 
-@interface PLSphericalPanorama : PLPanoramaBase 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLSphericalPanorama : PLPanoramaBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	NSUInteger divs;
-	GLUquadric *quadratic;
+    NSUInteger divs;
+    GLUquadric *quadratic;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) NSUInteger divs;
+@property (nonatomic, assign) NSUInteger divs;
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setImage:(PLImage *)image;
+- (void)setImage:(PLImage *)image;
 
--(void)setTexture:(PLTexture *)texture;
+- (void)setTexture:(PLTexture *)texture;
 
 @end

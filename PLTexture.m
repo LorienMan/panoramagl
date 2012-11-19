@@ -19,12 +19,12 @@
 #import "PLObjectBaseProtected.h"
 #import "PLTexture.h"
 
-@interface PLTexture(Private)
+@interface PLTexture (Private)
 
--(int)convertToValidValueForDimension:(int)dimension;
--(BOOL)loadTextureWithObject;
--(void)releaseImage;
--(void)deleteTexture;
+- (int)convertToValidValueForDimension:(int)dimension;
+- (BOOL)loadTextureWithObject;
+- (void)releaseImage;
+- (void)deleteTexture;
 
 @end
 
@@ -35,255 +35,240 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithImage:(PLImage *)imageValue
+- (id)initWithImage:(PLImage *)imageValue
 {
-	if(self = [super init])
-		image = (imageValue ? [imageValue retain] : nil);
-	return self;
+    if (self = [super init])
+        image = (imageValue ? [imageValue retain] : nil);
+    return self;
 }
 
-+(id)textureWithImage:(PLImage *)image
++ (id)textureWithImage:(PLImage *)image
 {
-	return [[[PLTexture alloc] initWithImage:image] autorelease];
+    return [[[PLTexture alloc] initWithImage:image] autorelease];
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
+    [super initializeValues];
     isValid = NO;
-	isRecycled = YES;
-	textureID = (GLuint *)malloc(sizeof(GLuint));
-	textureID[0] = 0;
-	format = PLTextureColorFormatRGBA8888;
+    isRecycled = YES;
+    textureID = (GLuint *) malloc(sizeof(GLuint));
+    textureID[0] = 0;
+    format = PLTextureColorFormatRGBA8888;
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(GLuint)getTextureID
+- (GLuint)getTextureID
 {
-	if(!isValid)
-	{
-		@try
-		{
-			[self loadTextureWithObject];
-		}
-		@catch(NSException *e)
-		{
-			[PLLog error:@"PLTexture::getTextureId" format:@"getTextureId: %@", e.reason];
-		}
-	}
-	return textureID[0];
+    if (!isValid) {
+        @try {
+            [self loadTextureWithObject];
+        }
+        @catch (NSException *e) {
+            [PLLog error:@"PLTexture::getTextureId" format:@"getTextureId: %@", e.reason];
+        }
+    }
+    return textureID[0];
 }
-			 
--(int)getWidth
+
+- (int)getWidth
 {
-	return width;
+    return width;
 }
-			 
--(int)getHeight
+
+- (int)getHeight
 {
-	return height;
+    return height;
 }
-			 
--(BOOL)isValid
+
+- (BOOL)isValid
 {
-	return isValid;
+    return isValid;
 }
-			 
--(BOOL)isRecycled
+
+- (BOOL)isRecycled
 {
-	return isRecycled;
+    return isRecycled;
 }
-			 
--(PLTextureColorFormat)getFormat
+
+- (PLTextureColorFormat)getFormat
 {
-	return format;
+    return format;
 }
-			 
--(void)setFormat:(PLTextureColorFormat)value
+
+- (void)setFormat:(PLTextureColorFormat)value
 {
-	format = value;
+    format = value;
 }
-			 
+
 #pragma mark -
 #pragma mark utility methods
-			 
--(int)convertToValidValueForDimension:(int)dimension
+
+- (int)convertToValidValueForDimension:(int)dimension
 {
-	if(dimension <= 4)
-		return 4;
-	else if(dimension <= 8)
-		return 8;
-	else if(dimension <= 16)
-		return 16;
-	else if(dimension <= 32)
-		return 32;
-	else if(dimension <= 64)
-		return 64;
-	else if(dimension <= 128)
-		return 128;
-	else if(dimension <= 256)
-		return 256;
-	else if(dimension <= 512)
-		return 512;
-	else if(dimension <= 1024)
-		return 1024;
-	else
-		return 2048;
+    if (dimension <= 4)
+        return 4;
+    else if (dimension <= 8)
+        return 8;
+    else if (dimension <= 16)
+        return 16;
+    else if (dimension <= 32)
+        return 32;
+    else if (dimension <= 64)
+        return 64;
+    else if (dimension <= 128)
+        return 128;
+    else if (dimension <= 256)
+        return 256;
+    else if (dimension <= 512)
+        return 512;
+    else if (dimension <= 1024)
+        return 1024;
+    else
+        return 2048;
 }
 
 #pragma mark -
 #pragma mark load methods
-			 
--(BOOL)loadTextureWithObject
-{
-	@try
-	{
-		if(image == nil || ![image isValid])
-			return NO;
-					 
-		[self deleteTexture];
-					 
-		width = [image getWidth];
-		height = [image getHeight];
-					 
-		if(width > kTextureMaxWidth || height > kTextureMaxHeight)
-		{
-			[PLLog error:@"PLTexture::loadTextureWithObject"
-				  format:@"Invalid texture size. Texture max size is %d x %d, currently is (%d x %d)", 
-						kTextureMaxWidth, kTextureMaxHeight, width, height];
-			[self releaseImage];
-			return NO;
-		}
-					 
-		BOOL isResizableImage = NO;
-		if(![PLMath isPowerOfTwo:width] || width > kTextureMaxWidth)
-		{
-			isResizableImage = YES;
-			width = [self convertToValidValueForDimension:width];
-		}
-		if(![PLMath isPowerOfTwo:height] || height > kTextureMaxHeight)
-		{
-			isResizableImage = YES;
-			height = [self convertToValidValueForDimension:height];
-		}
-					 
-		if(isResizableImage)
-			[image scale:CGSizeMake(width, height)];
-					 
-		glGenTextures(1, &textureID[0]);
-					 
-		int errGL = glGetError();
-		if(errGL != GL_NO_ERROR)
-		{
-			[PLLog error:@"PLTexture::loadTextureWithObject"
-				  format:@"glGetError #1 = (%d) %s ...", 
-						errGL, (const char *)gluErrorString(errGL)];
-			[self releaseImage];
-			return NO;
-		}
-					 
-		glBindTexture(GL_TEXTURE_2D, textureID[0]);
-		errGL = glGetError();
-		if(errGL != GL_NO_ERROR)
-		{
-			[PLLog error:@"PLTexture::loadTextureWithObject"
-				  format:@"glGetError #2 = (%d) %s ...", 
-						errGL, (const char *)gluErrorString(errGL)];
-			[self releaseImage];
-			return NO;
-		}
 
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //GLES10.GL_NEAREST
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); //GL10.GL_REPEAT
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-					 
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); //GL10.GL_REPLACE
-					 
-		unsigned char * bits = image.bits;
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width , height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bits);
-					 
-		free(bits);
-		bits = nil;
-						  
-		errGL = glGetError();
-		if(errGL != GL_NO_ERROR)
-		{
-			[PLLog error:@"PLTexture::loadTextureWithObject" 
-				  format:@"glGetError #3 = (%d) %s ...", 
-						errGL, (const char *)gluErrorString(errGL)];
-			[self releaseImage];
-			return NO;
-		}
-					 
-		[self releaseImage];
-					 
-		isValid = YES;
-		isRecycled = NO;
-					 
-		if(delegate)
-			[delegate didLoad:self];
-					 
-		return YES;
-	}
-	@catch(NSException *e)
-	{
-		[PLLog error:@"PLTexture::loadTextureWithObject" format:@"Error: %@", e.reason];
-	}
-	return NO;
+- (BOOL)loadTextureWithObject
+{
+    @try {
+        if (image == nil || ![image isValid])
+            return NO;
+
+        [self deleteTexture];
+
+        width = [image getWidth];
+        height = [image getHeight];
+
+        if (width > kTextureMaxWidth || height > kTextureMaxHeight) {
+            [PLLog error:@"PLTexture::loadTextureWithObject"
+                  format:@"Invalid texture size. Texture max size is %d x %d, currently is (%d x %d)",
+                         kTextureMaxWidth, kTextureMaxHeight, width, height];
+            [self releaseImage];
+            return NO;
+        }
+
+        BOOL isResizableImage = NO;
+        if (![PLMath isPowerOfTwo:width] || width > kTextureMaxWidth) {
+            isResizableImage = YES;
+            width = [self convertToValidValueForDimension:width];
+        }
+        if (![PLMath isPowerOfTwo:height] || height > kTextureMaxHeight) {
+            isResizableImage = YES;
+            height = [self convertToValidValueForDimension:height];
+        }
+
+        if (isResizableImage)
+            [image scale:CGSizeMake(width, height)];
+
+        glGenTextures(1, &textureID[0]);
+
+        int errGL = glGetError();
+        if (errGL != GL_NO_ERROR) {
+            [PLLog error:@"PLTexture::loadTextureWithObject"
+                  format:@"glGetError #1 = (%d) %s ...",
+                         errGL, (const char *) gluErrorString(errGL)];
+            [self releaseImage];
+            return NO;
+        }
+
+        glBindTexture(GL_TEXTURE_2D, textureID[0]);
+        errGL = glGetError();
+        if (errGL != GL_NO_ERROR) {
+            [PLLog error:@"PLTexture::loadTextureWithObject"
+                  format:@"glGetError #2 = (%d) %s ...",
+                         errGL, (const char *) gluErrorString(errGL)];
+            [self releaseImage];
+            return NO;
+        }
+
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //GLES10.GL_NEAREST
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); //GL10.GL_REPEAT
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); //GL10.GL_REPLACE
+
+        unsigned char *bits = image.bits;
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bits);
+
+        free(bits);
+        bits = nil;
+
+        errGL = glGetError();
+        if (errGL != GL_NO_ERROR) {
+            [PLLog error:@"PLTexture::loadTextureWithObject"
+                  format:@"glGetError #3 = (%d) %s ...",
+                         errGL, (const char *) gluErrorString(errGL)];
+            [self releaseImage];
+            return NO;
+        }
+
+        [self releaseImage];
+
+        isValid = YES;
+        isRecycled = NO;
+
+        if (delegate)
+            [delegate didLoad:self];
+
+        return YES;
+    }
+    @catch (NSException *e) {
+        [PLLog error:@"PLTexture::loadTextureWithObject" format:@"Error: %@", e.reason];
+    }
+    return NO;
 }
 
 #pragma mark -
 #pragma mark delete methods
-			 
--(void)deleteTexture
+
+- (void)deleteTexture
 {
-	if(textureID && textureID[0] != 0)
-	{
-		glDeleteTextures(1, &textureID[0]);
-		textureID[0] = 0;
-	}
-	isValid = NO;
+    if (textureID && textureID[0] != 0) {
+        glDeleteTextures(1, &textureID[0]);
+        textureID[0] = 0;
+    }
+    isValid = NO;
 }
-			 
+
 #pragma mark -
 #pragma mark recycle methods
-			 
--(void)recycle
+
+- (void)recycle
 {
-	if(!isRecycled)
-	{
-		[self releaseImage];
-		[self deleteTexture];
-		isRecycled = YES;
-	}
+    if (!isRecycled) {
+        [self releaseImage];
+        [self deleteTexture];
+        isRecycled = YES;
+    }
 }
-			 
+
 #pragma mark -
 #pragma mark dealloc methods
-			 
--(void)releaseImage
+
+- (void)releaseImage
 {
-	if(image)
-	{
-		[image recycle];
-		[image release];
-		image = nil;
-	}
+    if (image) {
+        [image recycle];
+        [image release];
+        image = nil;
+    }
 }
-			 
--(void)dealloc
+
+- (void)dealloc
 {
-	[self recycle];
-	delegate = nil;
-	if(textureID)
-	{
-		free(textureID);
-		textureID = nil;
-	}
-	[super dealloc];
+    [self recycle];
+    delegate = nil;
+    if (textureID) {
+        free(textureID);
+        textureID = nil;
+    }
+    [super dealloc];
 }
-			 
+
 @end

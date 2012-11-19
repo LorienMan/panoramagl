@@ -26,51 +26,50 @@
 #import "PLLog.h"
 #import "PLTextureDelegate.h"
 
-@interface PLTexture : PLObjectBase
-{
-    #pragma mark -
-    #pragma mark member variables
-@private	
-	GLuint *textureID;
-	PLImage *image;
-	BOOL isRecycled;
-	int width, height;
-	BOOL isValid;
-	PLTextureColorFormat format;
-	NSObject<PLTextureDelegate> *delegate;
+@interface PLTexture : PLObjectBase {
+#pragma mark -
+#pragma mark member variables
+@private
+    GLuint *textureID;
+    PLImage *image;
+    BOOL isRecycled;
+    int width, height;
+    BOOL isValid;
+    PLTextureColorFormat format;
+    NSObject <PLTextureDelegate> *delegate;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, readonly, getter=getTextureID) GLuint textureID;
-@property(nonatomic, readonly, getter=getWidth) int width;
-@property(nonatomic, readonly, getter=getHeight) int height;
-@property(nonatomic, readonly, getter=isValid) BOOL isValid;
-@property(nonatomic, readonly, getter=isRecycled) BOOL isRecycled;
-@property(nonatomic, getter=getFormat, setter=setFormat:) PLTextureColorFormat format;
-@property(nonatomic, assign) NSObject<PLTextureDelegate> *delegate;
+@property (nonatomic, readonly, getter=getTextureID) GLuint textureID;
+@property (nonatomic, readonly, getter=getWidth) int width;
+@property (nonatomic, readonly, getter=getHeight) int height;
+@property (nonatomic, readonly, getter=isValid) BOOL isValid;
+@property (nonatomic, readonly, getter=isRecycled) BOOL isRecycled;
+@property (nonatomic, getter=getFormat, setter=setFormat:) PLTextureColorFormat format;
+@property (nonatomic, assign) NSObject <PLTextureDelegate> *delegate;
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithImage:(PLImage *)image;
-+(id)textureWithImage:(PLImage *)image;
+- (id)initWithImage:(PLImage *)image;
++ (id)textureWithImage:(PLImage *)image;
 
 #pragma mark -
 #pragma mark property methods
 
--(GLuint)getTextureID;
--(int)getWidth;
--(int)getHeight;
--(BOOL)isValid;
--(BOOL)isRecycled;
--(PLTextureColorFormat)getFormat;
--(void)setFormat:(PLTextureColorFormat)value;
+- (GLuint)getTextureID;
+- (int)getWidth;
+- (int)getHeight;
+- (BOOL)isValid;
+- (BOOL)isRecycled;
+- (PLTextureColorFormat)getFormat;
+- (void)setFormat:(PLTextureColorFormat)value;
 
 #pragma mark -
 #pragma mark recycle methods
 
--(void)recycle;
+- (void)recycle;
 
 @end

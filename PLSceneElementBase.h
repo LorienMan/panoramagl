@@ -24,23 +24,22 @@
 #import "PLUtils.h"
 #import "PLTexture.h"
 
-@interface PLSceneElementBase : PLRenderableElementBase 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLSceneElementBase : PLRenderableElementBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	long long identifier;
+    long long identifier;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) long long identifier;
-@property(nonatomic, readonly, getter=getType) PLSceneElementType type;
+@property (nonatomic, assign) long long identifier;
+@property (nonatomic, readonly, getter=getType) PLSceneElementType type;
 
 #pragma mark -
 #pragma mark property methods
 
--(PLSceneElementType)getType;
+- (PLSceneElementType)getType;
 
 @end

@@ -27,8 +27,8 @@
 #pragma mark -
 #pragma mark transition methods
 
--(void)transition:(PLTransition *)transition didBeginTransition:(PLTransitionType)type;
--(void)transition:(PLTransition *)transition didProcessTransition:(PLTransitionType)type progressPercentage:(NSUInteger)progressPercentage;
--(void)transition:(PLTransition *)transition didEndTransition:(PLTransitionType)type;
+- (void)transition:(PLTransition *)transition didBeginTransition:(PLTransitionType)type;
+- (void)transition:(PLTransition *)transition didProcessTransition:(PLTransitionType)type progressPercentage:(NSUInteger)progressPercentage;
+- (void)transition:(PLTransition *)transition didEndTransition:(PLTransitionType)type;
 
 @end

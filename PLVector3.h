@@ -25,66 +25,65 @@
 
 #import "PLStructs.h"
 
-@interface PLVector3 : NSObject
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLVector3 : NSObject {
+#pragma mark -
+#pragma mark member variables
 @private
-	float x, y, z;
+    float x, y, z;
 }
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) float x,y,z;
-@property(nonatomic, readonly, getter=getPosition) PLPosition position;
+@property (nonatomic, assign) float x, y, z;
+@property (nonatomic, readonly, getter=getPosition) PLPosition position;
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithVertex:(PLVertex)vertex;
--(id)initWithPosition:(PLPosition)position;
--(id)initWithX:(float)x y:(float)y z:(float)z;
--(id)initWithVector3:(PLVector3 *)vector3;
+- (id)initWithVertex:(PLVertex)vertex;
+- (id)initWithPosition:(PLPosition)position;
+- (id)initWithX:(float)x y:(float)y z:(float)z;
+- (id)initWithVector3:(PLVector3 *)vector3;
 
-+(id)vector3;
-+(id)vector3WithX:(float)x y:(float)y z:(float)z;
-+(id)vector3WithVertex:(PLVertex)vertex;
-+(id)vector3WithPosition:(PLPosition)position;
-+(id)vector3WithVector3:(PLVector3 *)vector3;
++ (id)vector3;
++ (id)vector3WithX:(float)x y:(float)y z:(float)z;
++ (id)vector3WithVertex:(PLVertex)vertex;
++ (id)vector3WithPosition:(PLPosition)position;
++ (id)vector3WithVector3:(PLVector3 *)vector3;
 
 #pragma mark -
 #pragma mark property methods
 
--(PLPosition)getPosition;
+- (PLPosition)getPosition;
 
--(void)setValuesWithX:(float)x y:(float)y z:(float)z;
--(void)setValuesWithPosition:(PLPosition)position;
--(void)setValues:(float *)values;
+- (void)setValuesWithX:(float)x y:(float)y z:(float)z;
+- (void)setValuesWithPosition:(PLPosition)position;
+- (void)setValues:(float *)values;
 
 #pragma mark -
 #pragma mark vector methods
 
--(BOOL)equals:(PLVector3 *)value;
+- (BOOL)equals:(PLVector3 *)value;
 
--(PLVector3 *)add:(PLVector3 *)value;
--(PLVector3 *)sub:(PLVector3 *)value;
--(PLVector3 *)minus;
--(PLVector3 *)div:(PLVector3 *)value;
--(PLVector3 *)divf:(float)value;
--(PLVector3 *)mult:(PLVector3 *)value;
--(PLVector3 *)multf:(float)value;
+- (PLVector3 *)add:(PLVector3 *)value;
+- (PLVector3 *)sub:(PLVector3 *)value;
+- (PLVector3 *)minus;
+- (PLVector3 *)div:(PLVector3 *)value;
+- (PLVector3 *)divf:(float)value;
+- (PLVector3 *)mult:(PLVector3 *)value;
+- (PLVector3 *)multf:(float)value;
 
--(float)dot:(PLVector3 *)value;
--(PLVector3 *)crossProduct:(PLVector3 *)value;
+- (float)dot:(PLVector3 *)value;
+- (PLVector3 *)crossProduct:(PLVector3 *)value;
 
--(float)magnitude;
--(float)distance:(PLVector3 *)value;
--(void)normalize;
+- (float)magnitude;
+- (float)distance:(PLVector3 *)value;
+- (void)normalize;
 
 #pragma mark -
 #pragma mark clone methods
 
--(PLVector3 *)clone;
+- (PLVector3 *)clone;
 
 @end

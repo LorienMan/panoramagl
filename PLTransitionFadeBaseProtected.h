@@ -19,6 +19,6 @@
 #import "PLTransitionProtected.h"
 #import "PLTransitionFadeBase.h"
 
-@interface PLTransitionFadeBase(Protected)
+@interface PLTransitionFadeBase (Protected)
 
 @end

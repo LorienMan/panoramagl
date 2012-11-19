@@ -19,21 +19,20 @@
 #import "PLObjectBase.h"
 #import "PLIObject.h"
 
-@interface PLObject : PLObjectBase <PLIObject>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLObject : PLObjectBase <PLIObject> {
+#pragma mark -
+#pragma mark member variables
 @private
-	BOOL isXAxisEnabled, isYAxisEnabled, isZAxisEnabled;
-	PLPosition position;
-	PLRange xRange, yRange, zRange;
-	
-	BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation, isYZAxisInverseRotation;
-	PLRotation rotation;
-	PLRange pitchRange, yawRange, rollRange;
-	float rotateSensitivity;
-	
-	float alpha, defaultAlpha;
+    BOOL isXAxisEnabled, isYAxisEnabled, isZAxisEnabled;
+    PLPosition position;
+    PLRange xRange, yRange, zRange;
+
+    BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation, isYZAxisInverseRotation;
+    PLRotation rotation;
+    PLRange pitchRange, yawRange, rollRange;
+    float rotateSensitivity;
+
+    float alpha, defaultAlpha;
 }
 
 @end

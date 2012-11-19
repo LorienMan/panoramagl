@@ -40,110 +40,110 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, retain) NSObject<PLIPanorama> *panorama;
+@property (nonatomic, retain) NSObject <PLIPanorama> *panorama;
 
-@property(nonatomic, readonly, getter=getCamera) PLCamera *camera;
+@property (nonatomic, readonly, getter=getCamera) PLCamera *camera;
 
-@property(nonatomic) NSTimeInterval animationInterval;
-@property(nonatomic) NSUInteger animationFrameInterval;
+@property (nonatomic) NSTimeInterval animationInterval;
+@property (nonatomic) NSUInteger animationFrameInterval;
 
-@property(nonatomic) BOOL isBlocked;
+@property (nonatomic) BOOL isBlocked;
 
-@property(nonatomic) BOOL isAccelerometerEnabled, isAccelerometerLeftRightEnabled, isAccelerometerUpDownEnabled;
-@property(nonatomic) float accelerometerSensitivity;
-@property(nonatomic) NSTimeInterval accelerometerInterval;
+@property (nonatomic) BOOL isAccelerometerEnabled, isAccelerometerLeftRightEnabled, isAccelerometerUpDownEnabled;
+@property (nonatomic) float accelerometerSensitivity;
+@property (nonatomic) NSTimeInterval accelerometerInterval;
 
-@property(nonatomic) CGPoint startPoint, endPoint;
-@property(nonatomic, readonly) CGPoint startFovPoint, endFovPoint;
+@property (nonatomic) CGPoint startPoint, endPoint;
+@property (nonatomic, readonly) CGPoint startFovPoint, endFovPoint;
 
-@property(nonatomic) BOOL isScrollingEnabled;
-@property(nonatomic) NSUInteger minDistanceToEnableScrolling;
+@property (nonatomic) BOOL isScrollingEnabled;
+@property (nonatomic) NSUInteger minDistanceToEnableScrolling;
 
-@property(nonatomic) BOOL isInertiaEnabled;
-@property(nonatomic) NSTimeInterval inertiaInterval;
+@property (nonatomic) BOOL isInertiaEnabled;
+@property (nonatomic) NSTimeInterval inertiaInterval;
 
-@property(nonatomic) BOOL isResetEnabled, isShakeResetEnabled;
-@property(nonatomic) uint8_t numberOfTouchesForReset;
+@property (nonatomic) BOOL isResetEnabled, isShakeResetEnabled;
+@property (nonatomic) uint8_t numberOfTouchesForReset;
 
-@property(nonatomic, readonly) BOOL isValidForFov;
+@property (nonatomic, readonly) BOOL isValidForFov;
 
-@property(nonatomic) float shakeThreshold;
+@property (nonatomic) float shakeThreshold;
 
-@property(nonatomic) BOOL isDisplayLinkSupported;
-@property(nonatomic, readonly) BOOL isAnimating, isSensorialRotationRunning;
+@property (nonatomic) BOOL isDisplayLinkSupported;
+@property (nonatomic, readonly) BOOL isAnimating, isSensorialRotationRunning;
 
-@property(nonatomic, assign) NSObject<PLViewDelegate> *delegate;
+@property (nonatomic, assign) NSObject <PLViewDelegate> *delegate;
 
-@property(nonatomic, readonly, getter=getIsValidForTransition) BOOL isValidForTransition;
+@property (nonatomic, readonly, getter=getIsValidForTransition) BOOL isValidForTransition;
 
-@property(nonatomic, readonly) PLTouchStatus touchStatus;
-@property(nonatomic) BOOL isPointerVisible;
+@property (nonatomic, readonly) PLTouchStatus touchStatus;
+@property (nonatomic) BOOL isPointerVisible;
 
 #pragma mark -
 #pragma mark property methods
 
--(PLCamera *)getCamera;
+- (PLCamera *)getCamera;
 
--(void)setSceneAlpha:(float)value;
+- (void)setSceneAlpha:(float)value;
 
--(BOOL)getIsValidForTransition;
+- (BOOL)getIsValidForTransition;
 
--(UIInterfaceOrientation)currentDeviceOrientation;
+- (UIInterfaceOrientation)currentDeviceOrientation;
 
-+(Class)layerClass;
++ (Class)layerClass;
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)reset;
--(void)resetWithoutAlpha;
--(void)resetSceneAlpha;
+- (void)reset;
+- (void)resetWithoutAlpha;
+- (void)resetSceneAlpha;
 
 #pragma mark -
 #pragma mark draw methods
 
--(void)drawView;
--(void)drawViewNTimes:(NSUInteger)times;
+- (void)drawView;
+- (void)drawViewNTimes:(NSUInteger)times;
 
 #pragma mark -
 #pragma mark render buffer methods
 
--(void)regenerateRenderBuffer;
+- (void)regenerateRenderBuffer;
 
 #pragma mark -
 #pragma mark animation methods
 
--(void)startAnimation;
--(void)stopAnimation;
+- (void)startAnimation;
+- (void)stopAnimation;
 
 #pragma mark -
 #pragma mark sensorial rotation methods
 
--(void)startSensorialRotation;
--(void)stopSensorialRotation;
+- (void)startSensorialRotation;
+- (void)stopSensorialRotation;
 
 #pragma mark -
 #pragma mark transition methods
 
--(BOOL)executeTransition:(PLTransition *)transition;
+- (BOOL)executeTransition:(PLTransition *)transition;
 
 @optional
 
 #pragma mark -
 #pragma mark progressbar methods
 
--(BOOL)showProgressBar;
--(void)resetProgressBar;
--(BOOL)hideProgressBar;
+- (BOOL)showProgressBar;
+- (void)resetProgressBar;
+- (BOOL)hideProgressBar;
 
 #pragma mark -
 #pragma mark clear methods
 
--(void)clear;
+- (void)clear;
 
 #pragma mark -
 #pragma mark load methods
 
--(void)load:(NSObject<PLILoader> *)loader;
+- (void)load:(NSObject <PLILoader> *)loader;
 
 @end

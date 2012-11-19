@@ -25,12 +25,11 @@ static PLOpenGLVersion glVersion = PLOpenGLVersionUnknow;
 #pragma mark -
 #pragma mark property methods
 
-+(PLOpenGLVersion)getOpenGLVersion
++ (PLOpenGLVersion)getOpenGLVersion
 {
-    if(glVersion == PLOpenGLVersionUnknow)
-    {
-        NSString *version = [NSString stringWithCString:(const char *)glGetString(GL_VERSION) encoding:NSUTF8StringEncoding];
-        if([version rangeOfString:@"1.1"].location != NSNotFound)
+    if (glVersion == PLOpenGLVersionUnknow) {
+        NSString *version = [NSString stringWithCString:(const char *) glGetString(GL_VERSION) encoding:NSUTF8StringEncoding];
+        if ([version rangeOfString:@"1.1"].location != NSNotFound)
             glVersion = PLOpenGLVersion1_1;
         else
             glVersion = PLOpenGLVersion2_0;

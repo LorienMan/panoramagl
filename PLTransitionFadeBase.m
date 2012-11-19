@@ -26,87 +26,81 @@
 #pragma mark -
 #pragma mark init methods
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
-	fadeStep = kDefaultStepFade;
+    [super initializeValues];
+    fadeStep = kDefaultStepFade;
 }
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)resetSceneAlpha
+- (void)resetSceneAlpha
 {
-	if(self.view)
-		[self.view resetSceneAlpha];
+    if (self.view)
+        [self.view resetSceneAlpha];
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setFadeStep:(float)value
+- (void)setFadeStep:(float)value
 {
-	if(value > 0.0f)
-		fadeStep = value;
+    if (value > 0.0f)
+        fadeStep = value;
 }
 
 #pragma mark -
 #pragma mark internal control methods
 
--(void)beginExecute
+- (void)beginExecute
 {
-	PLScene *scene = self.scene;
-	float alpha = 0.0f;
-	switch(self.type)
-	{
-		case PLTransitionTypeFadeIn:
-			alpha = 0.0f;
-			break;
-		case PLTransitionTypeFadeOut:
-			alpha = 1.0f;
-			break;
-	}
-	for(PLSceneElement *element in scene.elements)
-	{
-		if(element.type == PLSceneElementTypeHotspot)
-		{
-			PLHotspot *hotspot = (PLHotspot *)element;
-			if(hotspot.touchStatus != PLHotspotTouchStatusOut)
-			{
-				[hotspot touchOut:self];
-				[hotspot touchBlock];
-			}
-		}
-		
-	}
-	scene.alpha = MIN(alpha, scene.defaultAlpha);
-	[self.view drawView];
+    PLScene *scene = self.scene;
+    float alpha = 0.0f;
+    switch (self.type) {
+        case PLTransitionTypeFadeIn:
+            alpha = 0.0f;
+            break;
+        case PLTransitionTypeFadeOut:
+            alpha = 1.0f;
+            break;
+    }
+    for (PLSceneElement *element in scene.elements) {
+        if (element.type == PLSceneElementTypeHotspot) {
+            PLHotspot *hotspot = (PLHotspot *) element;
+            if (hotspot.touchStatus != PLHotspotTouchStatusOut) {
+                [hotspot touchOut:self];
+                [hotspot touchBlock];
+            }
+        }
+
+    }
+    scene.alpha = MIN(alpha, scene.defaultAlpha);
+    [self.view drawView];
 }
 
--(BOOL)processInternally
+- (BOOL)processInternally
 {
-	BOOL isEnd = NO;
-	PLScene *scene = self.scene;
-	switch(self.type)
-	{
-		case PLTransitionTypeFadeIn:
-			scene.alpha = MIN(scene.alpha + fadeStep, scene.defaultAlpha);
-			[self setProgressPercentage:MIN(scene.alpha * 100, 100)];
-			isEnd = (scene.alpha >= 1.0f);
-			break;
-		case PLTransitionTypeFadeOut:
-			scene.alpha = MAX(0.0f, scene.alpha - fadeStep);
-			[self setProgressPercentage:MAX((1.0f - scene.alpha) * 100, 0)];
-			isEnd = (scene.alpha <= 0.0f);
-			break;
-	}
-	if(isEnd)
-	{
-		for(PLSceneElement *element in self.scene.elements)
-			if(element.type == PLSceneElementTypeHotspot)
-				[(PLHotspot *)element touchUnblock];
-	}
-	return isEnd;
+    BOOL isEnd = NO;
+    PLScene *scene = self.scene;
+    switch (self.type) {
+        case PLTransitionTypeFadeIn:
+            scene.alpha = MIN(scene.alpha + fadeStep, scene.defaultAlpha);
+            [self setProgressPercentage:MIN(scene.alpha * 100, 100)];
+            isEnd = (scene.alpha >= 1.0f);
+            break;
+        case PLTransitionTypeFadeOut:
+            scene.alpha = MAX(0.0f, scene.alpha - fadeStep);
+            [self setProgressPercentage:MAX((1.0f - scene.alpha) * 100, 0)];
+            isEnd = (scene.alpha <= 0.0f);
+            break;
+    }
+    if (isEnd) {
+        for (PLSceneElement *element in self.scene.elements)
+            if (element.type == PLSceneElementTypeHotspot)
+                [(PLHotspot *) element touchUnblock];
+    }
+    return isEnd;
 }
 
 @end

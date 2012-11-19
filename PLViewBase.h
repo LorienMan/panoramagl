@@ -20,54 +20,53 @@
 
 @protocol PLIRenderer;
 
-@interface PLViewBase : UIView <PLIView, UIAccelerometerDelegate, PLTransitionDelegate> 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLViewBase : UIView <PLIView, UIAccelerometerDelegate, PLTransitionDelegate> {
+#pragma mark -
+#pragma mark member variables
 @private
-	NSObject<PLIRenderer> *renderer;
-	NSObject<PLIPanorama> *scene;
-	
+    NSObject <PLIRenderer> *renderer;
+    NSObject <PLIPanorama> *scene;
+
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
-	
-	BOOL isBlocked;
-	
-	CGPoint startPoint, endPoint;
-	CGPoint startFovPoint, endFovPoint;
-	
-	BOOL isValidForFov;
-	float fovDistance;
-	NSUInteger fovCounter;
-	
-	BOOL isAccelerometerEnabled, isAccelerometerLeftRightEnabled, isAccelerometerUpDownEnabled;
-	float accelerometerSensitivity;
-	NSTimeInterval accelerometerInterval;
-	
-	BOOL isScrollingEnabled, isValidForScrolling, isScrolling;
-	NSUInteger minDistanceToEnableScrolling;
-	
-	BOOL isInertiaEnabled, isValidForInertia;
-	NSTimer *inertiaTimer;
-	NSTimeInterval inertiaInterval;
-	float inertiaStepValue;
-	
-	BOOL isResetEnabled, isShakeResetEnabled;
-	uint8_t numberOfTouchesForReset;
-	
-	PLShakeData shakeData;
-	float shakeThreshold;
-	
-	BOOL isValidForTouch;
-	
-	NSObject<PLViewDelegate> *delegate;
-	
-	BOOL displayLinkSupported, isDisplayLinkSupported;
-	id displayLink;
-	NSUInteger animationFrameInterval;
-	BOOL isAccelerometerActivated;
-	BOOL isAnimating;
-    
+
+    BOOL isBlocked;
+
+    CGPoint startPoint, endPoint;
+    CGPoint startFovPoint, endFovPoint;
+
+    BOOL isValidForFov;
+    float fovDistance;
+    NSUInteger fovCounter;
+
+    BOOL isAccelerometerEnabled, isAccelerometerLeftRightEnabled, isAccelerometerUpDownEnabled;
+    float accelerometerSensitivity;
+    NSTimeInterval accelerometerInterval;
+
+    BOOL isScrollingEnabled, isValidForScrolling, isScrolling;
+    NSUInteger minDistanceToEnableScrolling;
+
+    BOOL isInertiaEnabled, isValidForInertia;
+    NSTimer *inertiaTimer;
+    NSTimeInterval inertiaInterval;
+    float inertiaStepValue;
+
+    BOOL isResetEnabled, isShakeResetEnabled;
+    uint8_t numberOfTouchesForReset;
+
+    PLShakeData shakeData;
+    float shakeThreshold;
+
+    BOOL isValidForTouch;
+
+    NSObject <PLViewDelegate> *delegate;
+
+    BOOL displayLinkSupported, isDisplayLinkSupported;
+    id displayLink;
+    NSUInteger animationFrameInterval;
+    BOOL isAccelerometerActivated;
+    BOOL isAnimating;
+
     CMMotionManager *motionManager;
     NSTimer *motionTimer;
     CLLocationManager *locationManager;
@@ -76,14 +75,14 @@
     float firstMagneticHeading, magneticHeading;
     PLSensorType sensorType;
     BOOL isSensorialRotationRunning;
-	
-	BOOL isValidForTransition;
-	NSString * isValidForTransitionString;
-	PLTransition *currentTransition;
-	
-	PLTouchStatus touchStatus;
-	
-	BOOL isPointerVisible;
+
+    BOOL isValidForTransition;
+    NSString *isValidForTransitionString;
+    PLTransition *currentTransition;
+
+    PLTouchStatus touchStatus;
+
+    BOOL isPointerVisible;
 }
 
 @end

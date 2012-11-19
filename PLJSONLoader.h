@@ -19,10 +19,9 @@
 #import "PLObjectBase.h"
 #import "PLILoader.h"
 
-@interface PLJSONLoader : PLObjectBase <PLILoader>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLJSONLoader : PLObjectBase <PLILoader> {
+#pragma mark -
+#pragma mark member variables
 @private
     NSDictionary *hotspotTextures;
     NSDictionary *json;

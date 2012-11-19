@@ -23,8 +23,7 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-@interface PLObjectBase : NSObject
-{
+@interface PLObjectBase : NSObject {
 }
 
 @end

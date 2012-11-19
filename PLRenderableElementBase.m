@@ -25,102 +25,99 @@
 #pragma mark -
 #pragma mark init methods
 
--(void)initializeValues
+- (void)initializeValues
 {
-	[super initializeValues];
-	isVisible = YES;
-	isValid = NO;
+    [super initializeValues];
+    isVisible = YES;
+    isValid = NO;
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setIsValid:(BOOL)value
+- (void)setIsValid:(BOOL)value
 {
-	isValid = value;
+    isValid = value;
 }
 
 #pragma mark -
 #pragma mark translate methods
 
--(void)translate
+- (void)translate
 {
-	PLPosition position = self.position;
-	float yValue = self.isYZAxisInverseRotation ? position.z : position.y, zValue = self.isYZAxisInverseRotation ? position.y : position.z;
-	glTranslatef(self.isXAxisEnabled ? position.x : 0.0f, self.isYAxisEnabled ? yValue : 0.0f, self.isZAxisEnabled ? zValue : 0.0f);
+    PLPosition position = self.position;
+    float yValue = self.isYZAxisInverseRotation ? position.z : position.y, zValue = self.isYZAxisInverseRotation ? position.y : position.z;
+    glTranslatef(self.isXAxisEnabled ? position.x : 0.0f, self.isYAxisEnabled ? yValue : 0.0f, self.isZAxisEnabled ? zValue : 0.0f);
 }
 
 #pragma mark -
 #pragma mark rotate methods
 
--(void)rotate
+- (void)rotate
 {
-	[self internalRotate:self.rotation];
+    [self internalRotate:self.rotation];
 }
 
--(void)internalRotate:(PLRotation)rotationValue
+- (void)internalRotate:(PLRotation)rotationValue
 {
-	float yDirection = self.isYZAxisInverseRotation ? 0.0f : 1.0f, zDirection = self.isYZAxisInverseRotation ? 1.0f : 0.0f;
-	if(self.isPitchEnabled)
-		glRotatef(rotationValue.pitch * (self.isReverseRotation ? 1.0f : -1.0f), 1.0f, 0.0f, 0.0f);
-	if(self.isYawEnabled)
-		glRotatef(rotationValue.yaw * (self.isReverseRotation ? 1.0f : -1.0f), 0.0f, yDirection, zDirection);
-	if(self.isRollEnabled)
-		glRotatef(rotationValue.roll * (self.isReverseRotation ? 1.0f : -1.0f), 0.0f, yDirection, zDirection);
+    float yDirection = self.isYZAxisInverseRotation ? 0.0f : 1.0f, zDirection = self.isYZAxisInverseRotation ? 1.0f : 0.0f;
+    if (self.isPitchEnabled)
+        glRotatef(rotationValue.pitch * (self.isReverseRotation ? 1.0f : -1.0f), 1.0f, 0.0f, 0.0f);
+    if (self.isYawEnabled)
+        glRotatef(rotationValue.yaw * (self.isReverseRotation ? 1.0f : -1.0f), 0.0f, yDirection, zDirection);
+    if (self.isRollEnabled)
+        glRotatef(rotationValue.roll * (self.isReverseRotation ? 1.0f : -1.0f), 0.0f, yDirection, zDirection);
 }
 
 #pragma mark -
 #pragma mark alpha methods
 
--(void)beginAlpha
+- (void)beginAlpha
 {
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, self.alpha);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glColor4f(1.0f, 1.0f, 1.0f, self.alpha);
 }
 
--(void)endAlpha
+- (void)endAlpha
 {
-	glDisable(GL_BLEND);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glDisable(GL_BLEND);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 #pragma mark -
 #pragma mark render methods
 
--(void)beginRender
+- (void)beginRender
 {
-	glPushMatrix();
-	[self rotate];
-	[self translate];
-	[self beginAlpha];
+    glPushMatrix();
+    [self rotate];
+    [self translate];
+    [self beginAlpha];
 }
 
--(void)endRender
+- (void)endRender
 {
-	[self endAlpha];
-	glPopMatrix();
+    [self endAlpha];
+    glPopMatrix();
 }
 
--(BOOL)render
+- (BOOL)render
 {
-	@try
-	{
-		if(isVisible && isValid)
-		{
-			[self beginRender];
-			[self internalRender];
-			[self endRender];
-			return YES;
-		}
-	}
-	@catch(NSException *e)
-	{
-	}
-	return NO;
+    @try {
+        if (isVisible && isValid) {
+            [self beginRender];
+            [self internalRender];
+            [self endRender];
+            return YES;
+        }
+    }
+    @catch (NSException *e) {
+    }
+    return NO;
 }
 
--(void)internalRender
+- (void)internalRender
 {
 }
 

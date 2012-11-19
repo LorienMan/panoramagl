@@ -18,27 +18,26 @@
 
 #import "PLSceneElementBase.h"
 
-@interface PLSceneElement : PLSceneElementBase 
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLSceneElement : PLSceneElementBase {
+#pragma mark -
+#pragma mark member variables
 @private
-	NSMutableArray *textures;
+    NSMutableArray *textures;
 }
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithId:(long long)identifier;
--(id)initWithId:(long long)identifier texture:(PLTexture *)texture;
--(id)initWithTexture:(PLTexture *)texture;
+- (id)initWithId:(long long)identifier;
+- (id)initWithId:(long long)identifier texture:(PLTexture *)texture;
+- (id)initWithTexture:(PLTexture *)texture;
 
 #pragma mark -
 #pragma mark texture methods
 
--(void)addTexture:(PLTexture *)texture;
--(void)removeTexture:(PLTexture *)texture;
--(void)removeTextureAtIndex:(NSUInteger)index;
--(void)removeAllTextures;
+- (void)addTexture:(PLTexture *)texture;
+- (void)removeTexture:(PLTexture *)texture;
+- (void)removeTextureAtIndex:(NSUInteger)index;
+- (void)removeAllTextures;
 
 @end

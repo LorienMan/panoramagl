@@ -23,6 +23,6 @@
 #pragma mark -
 #pragma mark load methods
 
--(void)didLoad:(PLTexture *)texture;
+- (void)didLoad:(PLTexture *)texture;
 
 @end

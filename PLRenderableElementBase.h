@@ -19,12 +19,11 @@
 #import "PLObject.h"
 #import "PLIRenderableElement.h"
 
-@interface PLRenderableElementBase : PLObject <PLIRenderableElement>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLRenderableElementBase : PLObject <PLIRenderableElement> {
+#pragma mark -
+#pragma mark member variables
 @private
-	BOOL isVisible, isValid;
+    BOOL isVisible, isValid;
 }
 
 @end

@@ -25,34 +25,34 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign) UIView<PLIView> *view;
-@property(nonatomic, assign) NSObject<PLIScene> *scene;
-@property(nonatomic, readonly) BOOL isValid;
-@property(nonatomic, readonly, getter = isRunning) BOOL isRunning;
-@property(nonatomic, readonly) GLint backingWidth, backingHeight;
+@property (nonatomic, assign) UIView <PLIView> *view;
+@property (nonatomic, assign) NSObject <PLIScene> *scene;
+@property (nonatomic, readonly) BOOL isValid;
+@property (nonatomic, readonly, getter = isRunning) BOOL isRunning;
+@property (nonatomic, readonly) GLint backingWidth, backingHeight;
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithView:(UIView<PLIView> *)view scene:(NSObject<PLIScene> *)scene;
-+(id)rendererWithView:(UIView<PLIView> *)view scene:(NSObject<PLIScene> *)scene;
+- (id)initWithView:(UIView <PLIView> *)view scene:(NSObject <PLIScene> *)scene;
++ (id)rendererWithView:(UIView <PLIView> *)view scene:(NSObject <PLIScene> *)scene;
 
 #pragma mark -
 #pragma mark render methods
 
--(void)render;
--(void)renderNTimes:(NSUInteger)times;
+- (void)render;
+- (void)renderNTimes:(NSUInteger)times;
 
 #pragma mark -
 #pragma mark buffer methods
 
--(BOOL)resizeFromLayer;
+- (BOOL)resizeFromLayer;
 
 #pragma mark -
 #pragma mark control methods
 
--(void)start;
--(BOOL)isRunning;
--(void)stop;
+- (void)start;
+- (BOOL)isRunning;
+- (void)stop;
 
 @end

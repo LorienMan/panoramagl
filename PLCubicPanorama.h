@@ -18,17 +18,16 @@
 
 #import "PLPanoramaBase.h"
 
-@interface PLCubicPanorama : PLPanoramaBase
-{
+@interface PLCubicPanorama : PLPanoramaBase {
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(void)setImage:(PLImage *)image face:(PLCubeFaceOrientation)face;
+- (void)setImage:(PLImage *)image face:(PLCubeFaceOrientation)face;
 
--(void)setTexture:(PLTexture *)texture face:(PLCubeFaceOrientation)face;
+- (void)setTexture:(PLTexture *)texture face:(PLCubeFaceOrientation)face;
 
-+(GLfloat *)coordinates;
++ (GLfloat *)coordinates;
 
 @end

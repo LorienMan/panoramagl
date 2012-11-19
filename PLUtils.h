@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-@interface PLUtils : NSObject 
+@interface PLUtils : NSObject
 
 #pragma mark -
 #pragma mark swap methods

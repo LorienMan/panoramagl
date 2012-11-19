@@ -25,9 +25,9 @@
 #pragma mark -
 #pragma mark property methods
 
--(PLSceneElementType)getType
+- (PLSceneElementType)getType
 {
-	return PLSceneElementTypeNone;
+    return PLSceneElementTypeNone;
 }
 
 @end

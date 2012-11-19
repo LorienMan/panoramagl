@@ -19,34 +19,34 @@
 #import "PLObjectBaseProtected.h"
 #import "PLTransition.h"
 
-@interface PLTransition(Protected)
+@interface PLTransition (Protected)
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign, getter=timer, setter=setTimer:) NSTimer *timer;
-@property(nonatomic, readonly, getter=view) UIView<PLIView> *view;
-@property(nonatomic, readonly, getter=scene) PLScene *scene;
+@property (nonatomic, assign, getter=timer, setter=setTimer:) NSTimer *timer;
+@property (nonatomic, readonly, getter=view) UIView <PLIView> *view;
+@property (nonatomic, readonly, getter=scene) PLScene *scene;
 
 #pragma mark -
 #pragma mark property methods
 
--(NSTimer *)timer;
--(void)setTimer:(NSTimer *)timer;
+- (NSTimer *)timer;
+- (void)setTimer:(NSTimer *)timer;
 
--(UIView<PLIView> *)view;
--(PLScene *)scene;
+- (UIView <PLIView> *)view;
+- (PLScene *)scene;
 
--(void)setProgressPercentage:(NSUInteger)value;
+- (void)setProgressPercentage:(NSUInteger)value;
 
 #pragma mark -
 #pragma mark internal control methods
 
--(void)beginExecute;
--(void)endExecute;
+- (void)beginExecute;
+- (void)endExecute;
 
--(void)process;
--(BOOL)processInternally;
+- (void)process;
+- (BOOL)processInternally;
 
 @end
 

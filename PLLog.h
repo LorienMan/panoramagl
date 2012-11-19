@@ -23,7 +23,7 @@
 #pragma mark -
 #pragma mark log methods
 
-+(void)debug:(NSString *)tag format:(NSString *)format, ...;
-+(void)error:(NSString *)tag format:(NSString *)format, ...;
++ (void)debug:(NSString *)tag format:(NSString *)format, ...;
++ (void)error:(NSString *)tag format:(NSString *)format, ...;
 
 @end

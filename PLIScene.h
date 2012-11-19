@@ -29,43 +29,43 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, readonly) NSMutableArray *cameras;
-@property(nonatomic, readonly) PLCamera *currentCamera;
-@property(nonatomic, assign) NSUInteger cameraIndex;
-@property(nonatomic, readonly) NSMutableArray *elements;
-@property(nonatomic, readonly) UIView<PLIView> *view;
+@property (nonatomic, readonly) NSMutableArray *cameras;
+@property (nonatomic, readonly) PLCamera *currentCamera;
+@property (nonatomic, assign) NSUInteger cameraIndex;
+@property (nonatomic, readonly) NSMutableArray *elements;
+@property (nonatomic, readonly) UIView <PLIView> *view;
 
 #pragma mark -
 #pragma mark init methods
 
--(id)initWithCamera:(PLCamera *)camera;
--(id)initWithElement:(PLSceneElement *)element;
--(id)initWithElement:(PLSceneElement *)element camera:(PLCamera *)camera;
+- (id)initWithCamera:(PLCamera *)camera;
+- (id)initWithElement:(PLSceneElement *)element;
+- (id)initWithElement:(PLSceneElement *)element camera:(PLCamera *)camera;
 
--(id)initWithView:(UIView<PLIView> *)view;
--(id)initWithView:(UIView<PLIView> *)view camera:(PLCamera *)camera;
--(id)initWithView:(UIView<PLIView> *)view element:(PLSceneElement *)element;
--(id)initWithView:(UIView<PLIView> *)view element:(PLSceneElement *)element camera:(PLCamera *)camera;
+- (id)initWithView:(UIView <PLIView> *)view;
+- (id)initWithView:(UIView <PLIView> *)view camera:(PLCamera *)camera;
+- (id)initWithView:(UIView <PLIView> *)view element:(PLSceneElement *)element;
+- (id)initWithView:(UIView <PLIView> *)view element:(PLSceneElement *)element camera:(PLCamera *)camera;
 
 #pragma mark -
 #pragma mark reset methods
 
--(void)resetAlpha;
+- (void)resetAlpha;
 
 #pragma mark -
 #pragma mark camera methods
 
--(void)addCamera:(PLCamera *)camera;
--(void)removeCameraAtIndex:(NSUInteger)index;
--(void)removeCamera:(PLCamera *)camera;
--(void)removeAllCameras;
+- (void)addCamera:(PLCamera *)camera;
+- (void)removeCameraAtIndex:(NSUInteger)index;
+- (void)removeCamera:(PLCamera *)camera;
+- (void)removeAllCameras;
 
 #pragma mark -
 #pragma mark element methods
 
--(void)addElement:(PLSceneElement *)element;
--(void)removeElementAtIndex:(NSUInteger)index;
--(void)removeElement:(PLSceneElement *)element;
--(void)removeAllElements;
+- (void)addElement:(PLSceneElement *)element;
+- (void)removeElementAtIndex:(NSUInteger)index;
+- (void)removeElement:(PLSceneElement *)element;
+- (void)removeAllElements;
 
 @end

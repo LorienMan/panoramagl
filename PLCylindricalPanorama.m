@@ -28,17 +28,17 @@
 #pragma mark -
 #pragma mark init methods
 
-+(id)panorama
++ (id)panorama
 {
     return [[[PLCylindricalPanorama alloc] init] autorelease];
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
     [super initializeValues];
     quadratic = gluNewQuadric();
     gluQuadricNormals(quadratic, GLU_SMOOTH);
-	gluQuadricTexture(quadratic, YES);
+    gluQuadricTexture(quadratic, YES);
     height = kDefaultCylinderHeight;
     divs = kDefaultCylinderDivs;
     isHeightCalculated = kDefaultCylinderHeightCalculated;
@@ -49,106 +49,101 @@
 #pragma mark -
 #pragma mark property methods
 
--(PLSceneElementType)getType
+- (PLSceneElementType)getType
 {
-	return PLSceneElementTypePanorama;
+    return PLSceneElementTypePanorama;
 }
 
--(int)getPreviewSides
+- (int)getPreviewSides
 {
-	return 1;
+    return 1;
 }
 
--(int)getSides
+- (int)getSides
 {
-	return 1;
+    return 1;
 }
 
--(void)setImage:(PLImage *)image
+- (void)setImage:(PLImage *)image
 {
-    if(image)
+    if (image)
         [self setTexture:[PLTexture textureWithImage:image]];
 }
 
--(void)setTexture:(PLTexture *)texture
+- (void)setTexture:(PLTexture *)texture
 {
-    if(texture)
-    {
-        @synchronized(self)
-        {
-			PLTexture **textures = [self getTextures];
-			PLTexture *currentTexture = textures[0];
-			if(currentTexture)
-				[currentTexture release];
-			textures[0] = [texture retain];
-            if(isHeightCalculated)
+    if (texture) {
+        @synchronized (self) {
+            PLTexture **textures = [self getTextures];
+            PLTexture *currentTexture = textures[0];
+            if (currentTexture)
+                [currentTexture release];
+            textures[0] = [texture retain];
+            if (isHeightCalculated)
                 height = -1.0f;
-		}
-	}
+        }
+    }
 }
 
--(void)setHeight:(float)value
+- (void)setHeight:(float)value
 {
-    if(!isHeightCalculated)
+    if (!isHeightCalculated)
         height = ABS(value);
 }
 
 #pragma mark -
 #pragma mark render methods
 
--(void)internalRender
+- (void)internalRender
 {
     PLTexture *previewTexture = [self getPreviewTextures][0];
     PLTexture *texture = [self getTextures][0];
-    
+
     BOOL previewTextureIsValid = (previewTexture && previewTexture.textureID);
     BOOL textureIsValid = (texture && texture.textureID);
-    
-    if(isHeightCalculated && textureIsValid && height == -1.0f)
-    {
+
+    if (isHeightCalculated && textureIsValid && height == -1.0f) {
         int textureWidth = texture.width;
         int textureHeight = texture.height;
-        height = (textureWidth > textureHeight ? (float)textureWidth/textureHeight : (float)textureHeight/textureWidth);
+        height = (textureWidth > textureHeight ? (float) textureWidth / textureHeight : (float) textureHeight / textureWidth);
     }
-    
-    float h2 = height/2.0f;
-    
+
+    float h2 = height / 2.0f;
+
     glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
     glTranslatef(0.0f, 0.0f, -h2);
-    
-	glEnable(GL_TEXTURE_2D);
-    
-    if(textureIsValid)
-    {
+
+    glEnable(GL_TEXTURE_2D);
+
+    if (textureIsValid) {
         glBindTexture(GL_TEXTURE_2D, texture.textureID);
-        if(previewTextureIsValid)
+        if (previewTextureIsValid)
             [self removePreviewTextureAtIndex:0];
     }
-    else if(previewTextureIsValid)
+    else if (previewTextureIsValid)
         glBindTexture(GL_TEXTURE_2D, previewTexture.textureID);
-    
-	gluCylinder(quadratic, kRatio, kRatio, height, divs, divs);
-    
-	glDisable(GL_TEXTURE_2D);
-    
+
+    gluCylinder(quadratic, kRatio, kRatio, height, divs, divs);
+
+    glDisable(GL_TEXTURE_2D);
+
     glTranslatef(0.0f, 0.0f, h2);
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    
+
     [super internalRender];
 }
 
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc
+- (void)dealloc
 {
-	if(quadratic)
-	{
-		gluDeleteQuadric(quadratic);
-		quadratic = nil;
-	}
-	[super dealloc];
+    if (quadratic) {
+        gluDeleteQuadric(quadratic);
+        quadratic = nil;
+    }
+    [super dealloc];
 }
 
 @end

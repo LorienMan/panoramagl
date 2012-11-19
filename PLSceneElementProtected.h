@@ -19,21 +19,21 @@
 #import "PLSceneElementBaseProtected.h"
 #import "PLSceneElement.h"
 
-@interface PLSceneElement(Protected)
+@interface PLSceneElement (Protected)
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, readonly, getter=getTextures) NSMutableArray *textures;
+@property (nonatomic, readonly, getter=getTextures) NSMutableArray *textures;
 
 #pragma mark -
 #pragma mark property methods
 
--(NSMutableArray *)getTextures;
+- (NSMutableArray *)getTextures;
 
 #pragma mark -
 #pragma mark eval methods
 
--(void)evaluateIfElementIsValid;
+- (void)evaluateIfElementIsValid;
 
 @end

@@ -24,51 +24,47 @@
 #pragma mark -
 #pragma mark progressbar methods
 
--(BOOL)showProgressBar
+- (BOOL)showProgressBar
 {
-	if(!progressBar)
-	{
-		progressBar = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		CGSize size = self.bounds.size;
-		progressBar.frame = CGRectMake(0, 0, 50, 50);
-		progressBar.center = CGPointMake(size.width / 2.0f, size.height / 2.0f);
-		[self addSubview:progressBar];
-		[progressBar startAnimating];
-		[progressBar release];
-		return YES;
-	}
-	return NO;
+    if (!progressBar) {
+        progressBar = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        CGSize size = self.bounds.size;
+        progressBar.frame = CGRectMake(0, 0, 50, 50);
+        progressBar.center = CGPointMake(size.width / 2.0f, size.height / 2.0f);
+        [self addSubview:progressBar];
+        [progressBar startAnimating];
+        [progressBar release];
+        return YES;
+    }
+    return NO;
 }
 
--(void)resetProgressBar
+- (void)resetProgressBar
 {
-	if(progressBar)
-	{
-		[self hideProgressBar];
-		[self showProgressBar];
-	}
+    if (progressBar) {
+        [self hideProgressBar];
+        [self showProgressBar];
+    }
 }
 
--(BOOL)hideProgressBar
+- (BOOL)hideProgressBar
 {
-	if(progressBar)
-	{
-		[progressBar stopAnimating];
-		[progressBar removeFromSuperview];
-		progressBar = nil;
-		return YES;
-	}
-	return NO;
+    if (progressBar) {
+        [progressBar stopAnimating];
+        [progressBar removeFromSuperview];
+        progressBar = nil;
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark -
 #pragma mark layout methods 
 
--(void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
-    if(progressBar)
-    {
+    if (progressBar) {
         [self hideProgressBar];
         [self showProgressBar];
     }
@@ -77,13 +73,11 @@
 #pragma mark -
 #pragma mark clear methods
 
--(void)clear
+- (void)clear
 {
-    NSObject<PLIPanorama> *panorama = [self panorama];
-    if(panorama)
-    {
-        @synchronized(self)
-        {
+    NSObject <PLIPanorama> *panorama = [self panorama];
+    if (panorama) {
+        @synchronized (self) {
             [panorama clearPanorama];
         }
     }
@@ -92,12 +86,10 @@
 #pragma mark -
 #pragma mark load methods
 
--(void)load:(NSObject<PLILoader> *)loader
+- (void)load:(NSObject <PLILoader> *)loader
 {
-    if(loader)
-    {
-        @synchronized(self)
-        {
+    if (loader) {
+        @synchronized (self) {
             [self stopOnlyAnimation];
             [loader load:self];
         }
@@ -109,10 +101,10 @@
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc 
+- (void)dealloc
 {
-	[self hideProgressBar];
-	[super dealloc];
+    [self hideProgressBar];
+    [super dealloc];
 }
-				
+
 @end

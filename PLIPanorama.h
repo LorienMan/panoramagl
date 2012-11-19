@@ -27,39 +27,39 @@
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, readonly, getter=getSides) int sides;
+@property (nonatomic, readonly, getter=getSides) int sides;
 
 #pragma mark -
 #pragma mark init methods
 
-+(id)panorama;
++ (id)panorama;
 
 #pragma mark -
 #pragma mark property methods
 
--(int)getPreviewSides;
--(void)setPreviewImage:(PLImage *)value;
--(int)getSides;
+- (int)getPreviewSides;
+- (void)setPreviewImage:(PLImage *)value;
+- (int)getSides;
 
 #pragma mark -
 #pragma mark texture remove methods
 
--(void)removePreviewTextureAtIndex:(NSUInteger)index;
--(void)removeAllPreviewTextures;
+- (void)removePreviewTextureAtIndex:(NSUInteger)index;
+- (void)removeAllPreviewTextures;
 
--(void)removeAllTextures;
+- (void)removeAllTextures;
 
 #pragma mark -
 #pragma mark clear methods
 
--(void)clearPanorama;
+- (void)clearPanorama;
 
 #pragma mark -
 #pragma mark hotspot methods
 
--(void)addHotspot:(PLHotspot *)hotspot;
--(void)removeHotspot:(PLHotspot *)hotspot;
--(void)removeHotspotAtIndex:(NSUInteger)index;
--(void)removeAllHotspots;
+- (void)addHotspot:(PLHotspot *)hotspot;
+- (void)removeHotspot:(PLHotspot *)hotspot;
+- (void)removeHotspotAtIndex:(NSUInteger)index;
+- (void)removeAllHotspots;
 
 @end

@@ -32,176 +32,175 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)init
+- (id)init
 {
-	if(self = [super init])
-		x = y = z = 0.0f;
-	return self;
+    if (self = [super init])
+        x = y = z = 0.0f;
+    return self;
 }
 
--(id)initWithX:(float) xValue y:(float) yValue z:(float) zValue
+- (id)initWithX:(float)xValue y:(float)yValue z:(float)zValue
 {
-	if(self = [super init])
-	{
-		x = xValue;
-		y = yValue;
-		z = zValue;
-	}
-	return self;
+    if (self = [super init]) {
+        x = xValue;
+        y = yValue;
+        z = zValue;
+    }
+    return self;
 }
 
--(id)initWithVertex:(PLVertex)vertex
+- (id)initWithVertex:(PLVertex)vertex
 {
-	return [self initWithX:vertex.x y:vertex.y z:vertex.z];
+    return [self initWithX:vertex.x y:vertex.y z:vertex.z];
 }
 
--(id)initWithPosition:(PLPosition)position
+- (id)initWithPosition:(PLPosition)position
 {
-	return [self initWithX:position.x y:position.y z:position.z];
+    return [self initWithX:position.x y:position.y z:position.z];
 }
 
--(id)initWithVector3:(PLVector3 *)vector3
+- (id)initWithVector3:(PLVector3 *)vector3
 {
-	return [self initWithX:vector3.x y:vector3.y z:vector3.z];
+    return [self initWithX:vector3.x y:vector3.y z:vector3.z];
 }
 
-+(PLVector3 *)vector3
++ (PLVector3 *)vector3
 {
-	return [[[PLVector3 alloc] init] autorelease];
+    return [[[PLVector3 alloc] init] autorelease];
 }
 
-+(PLVector3 *)vector3WithX:(float) x y:(float) y z:(float) z
++ (PLVector3 *)vector3WithX:(float)x y:(float)y z:(float)z
 {
-	return [[[PLVector3 alloc] initWithX:x y:y z:z] autorelease];
+    return [[[PLVector3 alloc] initWithX:x y:y z:z] autorelease];
 }
 
-+(PLVector3 *)vector3WithVertex:(PLVertex)vertex
++ (PLVector3 *)vector3WithVertex:(PLVertex)vertex
 {
-	return [[[PLVector3 alloc] initWithVertex:vertex] autorelease];
+    return [[[PLVector3 alloc] initWithVertex:vertex] autorelease];
 }
 
-+(PLVector3 *)vector3WithPosition:(PLPosition)position
++ (PLVector3 *)vector3WithPosition:(PLPosition)position
 {
-	return [[[PLVector3 alloc] initWithPosition:position] autorelease];
+    return [[[PLVector3 alloc] initWithPosition:position] autorelease];
 }
 
-+(PLVector3 *)vector3WithVector3:(PLVector3 *)vector3
++ (PLVector3 *)vector3WithVector3:(PLVector3 *)vector3
 {
-	return [[[PLVector3 alloc] initWithVector3:vector3] autorelease];
+    return [[[PLVector3 alloc] initWithVector3:vector3] autorelease];
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(PLPosition)getPosition
+- (PLPosition)getPosition
 {
-	return PLPositionMake(x, y, z);
+    return PLPositionMake(x, y, z);
 }
 
--(void)setValuesWithX:(float)xValue y:(float)yValue z:(float)zValue
+- (void)setValuesWithX:(float)xValue y:(float)yValue z:(float)zValue
 {
-	x = xValue;
-	y = yValue;
-	z = zValue;
+    x = xValue;
+    y = yValue;
+    z = zValue;
 }
 
--(void)setValuesWithPosition:(PLPosition)position
+- (void)setValuesWithPosition:(PLPosition)position
 {
-	x = position.x;
-	y = position.y;
-	z = position.z;
+    x = position.x;
+    y = position.y;
+    z = position.z;
 }
 
--(void)setValues:(float *)values
+- (void)setValues:(float *)values
 {
-	x = values[0];
-	y = values[1];
-	z = values[2];
+    x = values[0];
+    y = values[1];
+    z = values[2];
 }
 
 #pragma mark -
 #pragma mark vector methods
 
--(BOOL)equals:(PLVector3 *)value
+- (BOOL)equals:(PLVector3 *)value
 {
-	return (x == value.x && y == value.y && z == value.z);
+    return (x == value.x && y == value.y && z == value.z);
 }
 
--(PLVector3 *)add:(PLVector3 *)value
+- (PLVector3 *)add:(PLVector3 *)value
 {
-	return [PLVector3 vector3WithX:x+value.x y:y+value.y z:z+value.z];
+    return [PLVector3 vector3WithX:x + value.x y:y + value.y z:z + value.z];
 }
 
--(PLVector3 *)sub:(PLVector3 *)value
-{	
-	return [PLVector3 vector3WithX:x-value.x y:y-value.y z:z-value.z];
+- (PLVector3 *)sub:(PLVector3 *)value
+{
+    return [PLVector3 vector3WithX:x - value.x y:y - value.y z:z - value.z];
 }
 
--(PLVector3 *)minus
+- (PLVector3 *)minus
 {
-	return [PLVector3 vector3WithX:-x y:-y z:-z];
+    return [PLVector3 vector3WithX:-x y:-y z:-z];
 }
 
--(PLVector3 *)div:(PLVector3 *)value
+- (PLVector3 *)div:(PLVector3 *)value
 {
-	return [PLVector3 vector3WithX:x/value.x y:y/value.y z:z/value.z];
+    return [PLVector3 vector3WithX:x / value.x y:y / value.y z:z / value.z];
 }
 
--(PLVector3 *)divf:(float)value
+- (PLVector3 *)divf:(float)value
 {
-	float invert = 1.0f / value;
-	return [PLVector3 vector3WithX:x*invert y:y*invert z:z*invert];
+    float invert = 1.0f / value;
+    return [PLVector3 vector3WithX:x * invert y:y * invert z:z * invert];
 }
 
--(PLVector3 *)mult:(PLVector3 *)value
+- (PLVector3 *)mult:(PLVector3 *)value
 {
-	return [PLVector3 vector3WithX:x*value.x y:y*value.y z:z*value.z];
+    return [PLVector3 vector3WithX:x * value.x y:y * value.y z:z * value.z];
 }
 
--(PLVector3 *)multf:(float)value
+- (PLVector3 *)multf:(float)value
 {
-	return [PLVector3 vector3WithX:x*value y:y*value z:z*value];
+    return [PLVector3 vector3WithX:x * value y:y * value z:z * value];
 }
 
--(float)dot:(PLVector3 *)value
+- (float)dot:(PLVector3 *)value
 {
-	return x*value.x + y*value.y + z*value.z;
+    return x * value.x + y * value.y + z * value.z;
 }
 
--(PLVector3 *)crossProduct:(PLVector3 *)value
+- (PLVector3 *)crossProduct:(PLVector3 *)value
 {
-	return [PLVector3 vector3WithX:y * value.z - z * value.y
-								 y:z * value.x - x * value.z
-								 z:x * value.y - y * value.x];
+    return [PLVector3 vector3WithX:y * value.z - z * value.y
+                                 y:z * value.x - x * value.z
+                                 z:x * value.y - y * value.x];
 }
 
--(float)magnitude
+- (float)magnitude
 {
-	return sqrtf(x*x + y*y + z*z);
+    return sqrtf(x * x + y * y + z * z);
 }
 
--(float)distance:(PLVector3 *)value
+- (float)distance:(PLVector3 *)value
 {
-	return [[self sub:value] magnitude];
+    return [[self sub:value] magnitude];
 }
 
--(void)normalize
+- (void)normalize
 {
-	float mag = (x*x + y*y + z*z);
-	if (mag == 0)
-		return;
-	float mult = 1.0f / sqrtf(mag);            
-	x *= mult;
-	y *= mult;
-	z *= mult;
+    float mag = (x * x + y * y + z * z);
+    if (mag == 0)
+        return;
+    float mult = 1.0f / sqrtf(mag);
+    x *= mult;
+    y *= mult;
+    z *= mult;
 }
 
 #pragma mark -
 #pragma mark clone methods
 
--(PLVector3 *)clone
+- (PLVector3 *)clone
 {
-	return [PLVector3 vector3WithVector3:self];
+    return [PLVector3 vector3WithVector3:self];
 }
 
 @end

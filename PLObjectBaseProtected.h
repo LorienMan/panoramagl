@@ -19,6 +19,6 @@
 #import "PLObjectBase.h"
 #import "PLIInitializeObject.h"
 
-@interface PLObjectBase(Protected) <PLIInitializeObject>
+@interface PLObjectBase (Protected) <PLIInitializeObject>
 
 @end

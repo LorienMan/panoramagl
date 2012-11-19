@@ -26,103 +26,99 @@
 #pragma mark -
 #pragma mark init methods
 
-+(id)panorama
++ (id)panorama
 {
     return [[[PLSphericalPanorama alloc] init] autorelease];
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
     [super initializeValues];
-	quadratic = gluNewQuadric();
-	gluQuadricNormals(quadratic, GLU_SMOOTH);
-	gluQuadricTexture(quadratic, YES);
-	divs = kDefaultSphereDivs;
+    quadratic = gluNewQuadric();
+    gluQuadricNormals(quadratic, GLU_SMOOTH);
+    gluQuadricTexture(quadratic, YES);
+    divs = kDefaultSphereDivs;
 }
 
 #pragma mark -
 #pragma mark property methods
 
--(PLSceneElementType)getType
+- (PLSceneElementType)getType
 {
-	return PLSceneElementTypePanorama;
+    return PLSceneElementTypePanorama;
 }
 
--(int)getPreviewSides
+- (int)getPreviewSides
 {
-	return 1;
+    return 1;
 }
 
--(int)getSides
+- (int)getSides
 {
-	return 1;
+    return 1;
 }
 
--(void)setImage:(PLImage *)image
+- (void)setImage:(PLImage *)image
 {
-    if(image)
+    if (image)
         [self setTexture:[PLTexture textureWithImage:image]];
 }
 
--(void)setTexture:(PLTexture *)texture
+- (void)setTexture:(PLTexture *)texture
 {
-    if(texture)
-    {
-        @synchronized(self)
-        {
-			PLTexture **textures = [self getTextures];
-			PLTexture *currentTexture = textures[0];
-			if(currentTexture)
-				[currentTexture release];
-			textures[0] = [texture retain];
-		}
-	}
+    if (texture) {
+        @synchronized (self) {
+            PLTexture **textures = [self getTextures];
+            PLTexture *currentTexture = textures[0];
+            if (currentTexture)
+                [currentTexture release];
+            textures[0] = [texture retain];
+        }
+    }
 }
 
 #pragma mark -
 #pragma mark render methods
 
--(void)internalRender
+- (void)internalRender
 {
     glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
 
-	glEnable(GL_TEXTURE_2D);
-    
+    glEnable(GL_TEXTURE_2D);
+
     PLTexture *previewTexture = [self getPreviewTextures][0];
     PLTexture *texture = [self getTextures][0];
-    
+
     BOOL previewTextureIsValid = (previewTexture && previewTexture.textureID);
-    
-    if(texture && texture.textureID)
-    {
+
+    if (texture && texture.textureID) {
         glBindTexture(GL_TEXTURE_2D, texture.textureID);
-        if(previewTextureIsValid)
+        if (previewTextureIsValid)
             [self removePreviewTextureAtIndex:0];
     }
-    else if(previewTextureIsValid)
+    else if (previewTextureIsValid)
         glBindTexture(GL_TEXTURE_2D, previewTexture.textureID);
-    
-	gluSphere(quadratic, kRatio, divs, divs);
-    
-	glDisable(GL_TEXTURE_2D);
-    
+
+    gluSphere(quadratic, kRatio, divs, divs);
+
+    glDisable(GL_TEXTURE_2D);
+
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    
+
     [super internalRender];
 }
 
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc
+- (void)dealloc
 {
-	if(quadratic)
-	{
-		gluDeleteQuadric(quadratic);
-		quadratic = nil;
-	}
-	[super dealloc];
+    if (quadratic) {
+        gluDeleteQuadric(quadratic);
+        quadratic = nil;
+    }
+    [super dealloc];
 }
 
 @end

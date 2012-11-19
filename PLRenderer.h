@@ -32,32 +32,31 @@
 #import "PLIntersection.h"
 #import "PLHotspot.h"
 
-@interface PLRenderer : PLObjectBase <PLIRenderer>
-{
-    #pragma mark -
-    #pragma mark member variables
+@interface PLRenderer : PLObjectBase <PLIRenderer> {
+#pragma mark -
+#pragma mark member variables
 @private
-	BOOL isValid;
-	
+    BOOL isValid;
+
     EAGLContext *context;
     GLuint program;
-	
-	GLint backingWidth, backingHeight;
-    
-	GLuint defaultFramebuffer, colorRenderbuffer;
-	
-	UIView<PLIView> *view;
-	NSObject<PLIScene> *scene;
-	
-	float aspect;
-	
-	float mvmatrix[16];
-	float projmatrix[16];
-	int viewport[4];
-	
-	PLVector3 *ray[2];
-	PLVector3 *hitPoint;
-	PLVector3 *points[4];
+
+    GLint backingWidth, backingHeight;
+
+    GLuint defaultFramebuffer, colorRenderbuffer;
+
+    UIView <PLIView> *view;
+    NSObject <PLIScene> *scene;
+
+    float aspect;
+
+    float mvmatrix[16];
+    float projmatrix[16];
+    int viewport[4];
+
+    PLVector3 *ray[2];
+    PLVector3 *hitPoint;
+    PLVector3 *points[4];
 }
 
 @end

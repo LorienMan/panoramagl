@@ -26,6 +26,6 @@
 #pragma mark -
 #pragma mark property methods
 
-+(PLOpenGLVersion)getOpenGLVersion;
++ (PLOpenGLVersion)getOpenGLVersion;
 
 @end

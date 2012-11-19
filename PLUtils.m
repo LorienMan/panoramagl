@@ -23,26 +23,26 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)init
+- (id)init
 {
-	return nil;
+    return nil;
 }
 
 #pragma mark -
 #pragma mark swap methods
 
-+(void)swapFloatValues:(float *)firstValue :(float *)secondValue
++ (void)swapFloatValues:(float *)firstValue :(float *)secondValue
 {
-	float swapValue = *firstValue;
-	*firstValue = *secondValue;
-	*secondValue = swapValue;
+    float swapValue = *firstValue;
+    *firstValue = *secondValue;
+    *secondValue = swapValue;
 }
 
-+(void)swapIntValues:(int *)firstValue :(int *)secondValue
++ (void)swapIntValues:(int *)firstValue :(int *)secondValue
 {
-	*firstValue = *firstValue ^ *secondValue;
-	*secondValue = *secondValue ^ *firstValue;
-	*firstValue = *firstValue ^ *secondValue;
+    *firstValue = *firstValue ^ *secondValue;
+    *secondValue = *secondValue ^ *firstValue;
+    *firstValue = *firstValue ^ *secondValue;
 }
 
 @end

@@ -19,78 +19,78 @@
 #import "PLViewBase.h"
 #import "PLIInitializeObject.h"
 
-@interface PLViewBase(Protected) <PLIInitializeObject, CLLocationManagerDelegate>
+@interface PLViewBase (Protected) <PLIInitializeObject, CLLocationManagerDelegate>
 
 #pragma mark -
 #pragma mark properties
 
-@property(nonatomic, assign, getter=animationTimer, setter=setAnimationTimer:) NSTimer *animationTimer;
-@property(nonatomic, assign, getter=displayLink, setter=setDisplayLink:) id displayLink;
-@property(nonatomic, readonly, getter=scene) NSObject<PLIScene> *scene;
-@property(nonatomic, readonly, getter=renderer) NSObject<PLIRenderer> *renderer;
+@property (nonatomic, assign, getter=animationTimer, setter=setAnimationTimer:) NSTimer *animationTimer;
+@property (nonatomic, assign, getter=displayLink, setter=setDisplayLink:) id displayLink;
+@property (nonatomic, readonly, getter=scene) NSObject <PLIScene> *scene;
+@property (nonatomic, readonly, getter=renderer) NSObject <PLIRenderer> *renderer;
 
 #pragma mark -
 #pragma mark property methods
 
--(NSTimer *)animationTimer;
--(void)setAnimationTimer:(NSTimer *)timer;
+- (NSTimer *)animationTimer;
+- (void)setAnimationTimer:(NSTimer *)timer;
 
--(id)displayLink;
--(void)setDisplayLink:(id)displayLink;
+- (id)displayLink;
+- (void)setDisplayLink:(id)displayLink;
 
--(NSObject<PLIScene> *)scene;
+- (NSObject <PLIScene> *)scene;
 
--(NSObject<PLIRenderer> *)renderer;
+- (NSObject <PLIRenderer> *)renderer;
 
--(BOOL)setAccelerometerDelegate:(id <UIAccelerometerDelegate>)accelerometerDelegate;
+- (BOOL)setAccelerometerDelegate:(id <UIAccelerometerDelegate>)accelerometerDelegate;
 
--(void)setIsValidForTransition:(BOOL)value;
+- (void)setIsValidForTransition:(BOOL)value;
 
 #pragma mark -
 #pragma mark fov methods
 
--(BOOL)calculateFov:(NSSet *)touches;
+- (BOOL)calculateFov:(NSSet *)touches;
 
 #pragma mark -
 #pragma mark action methods
 
--(BOOL)executeDefaultAction:(NSSet *)touches eventType:(PLTouchEventType)type;
--(BOOL)executeResetAction:(NSSet *)touches;
+- (BOOL)executeDefaultAction:(NSSet *)touches eventType:(PLTouchEventType)type;
+- (BOOL)executeResetAction:(NSSet *)touches;
 
 #pragma mark -
 #pragma mark accelerometer methods
 
--(void)activateAccelerometer;
--(void)deactiveAccelerometer;
+- (void)activateAccelerometer;
+- (void)deactiveAccelerometer;
 
 #pragma mark -
 #pragma mark animation methods
 
--(void)stopOnlyAnimation;
--(void)stopAnimationInternally;
+- (void)stopOnlyAnimation;
+- (void)stopAnimationInternally;
 
 #pragma mark -
 #pragma mark inertia methods
 
--(void)startInertia;
--(void)stopInertia;
--(void)inertia;
+- (void)startInertia;
+- (void)stopInertia;
+- (void)inertia;
 
 #pragma mark -
 #pragma mark touch methods
 
--(BOOL)isTouchInView:(NSSet *)touches;
--(CGPoint)getLocationOfFirstTouch:(NSSet *)touches;
+- (BOOL)isTouchInView:(NSSet *)touches;
+- (CGPoint)getLocationOfFirstTouch:(NSSet *)touches;
 
 #pragma mark -
 #pragma mark draw methods
 
--(void)drawViewInternally;
--(void)drawViewInternallyNTimes:(NSUInteger)times;
+- (void)drawViewInternally;
+- (void)drawViewInternallyNTimes:(NSUInteger)times;
 
 #pragma mark -
 #pragma mark shake methods
 
--(BOOL)resetWithShake:(UIAcceleration *)acceleration;
+- (BOOL)resetWithShake:(UIAcceleration *)acceleration;
 
 @end

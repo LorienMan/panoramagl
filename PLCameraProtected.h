@@ -19,6 +19,6 @@
 #import "PLRenderableElementBaseProtected.h"
 #import "PLCamera.h"
 
-@interface PLCamera(Protected)
+@interface PLCamera (Protected)
 
 @end

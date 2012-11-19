@@ -19,16 +19,15 @@
 #import "PLObjectBaseProtected.h"
 #import "PLJSONLoader.h"
 #import "PLView.h"
-#import "PLIView.h"
 
-@interface PLJSONLoader(Private)
+@interface PLJSONLoader (Private)
 
--(void)loadJSON:(NSString *)jsonString;
--(NSString *)getResourcePath;
--(NSString *)getFilePath:(NSString *)filename urlbase:(NSString *)urlbase;
--(PLTexture *)createTexture:(NSString *)filename urlbase:(NSString *)urlbase;
--(void)loadCubicPanoramaTexture:(NSObject<PLIPanorama> *)panorama face:(PLCubeFaceOrientation)face images:(NSDictionary *)images property:(NSString *)property urlbase:(NSString *)urlbase;
--(PLTexture *)createHotspotTexture:(NSString *)filename urlbase:(NSString *)urlbase;
+- (void)loadJSON:(NSString *)jsonString;
+- (NSString *)getResourcePath;
+- (NSString *)getFilePath:(NSString *)filename urlbase:(NSString *)urlbase;
+- (PLTexture *)createTexture:(NSString *)filename urlbase:(NSString *)urlbase;
+- (void)loadCubicPanoramaTexture:(NSObject <PLIPanorama> *)panorama face:(PLCubeFaceOrientation)face images:(NSDictionary *)images property:(NSString *)property urlbase:(NSString *)urlbase;
+- (PLTexture *)createHotspotTexture:(NSString *)filename urlbase:(NSString *)urlbase;
 
 @end
 
@@ -37,26 +36,24 @@
 #pragma mark -
 #pragma mark init methods
 
--(id)init
+- (id)init
 {
     return nil;
 }
 
--(id)initWithString:(NSString *)string
+- (id)initWithString:(NSString *)string
 {
-    if(self = [super init])
+    if (self = [super init])
         [self loadJSON:string];
     return self;
 }
 
--(id)initWithPath:(NSString *)path
+- (id)initWithPath:(NSString *)path
 {
-    if(self = [super init])
-    {
+    if (self = [super init]) {
         NSError *error = nil;
         NSString *jsonString = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-        if(jsonString)
-        {
+        if (jsonString) {
             [self loadJSON:jsonString];
             [jsonString release];
         }
@@ -66,18 +63,18 @@
     return self;
 }
 
--(void)initializeValues
+- (void)initializeValues
 {
     [super initializeValues];
     hotspotTextures = [[NSMutableDictionary alloc] init];
 }
 
-+(id)loaderWithString:(NSString *)string
++ (id)loaderWithString:(NSString *)string
 {
     return [[[PLJSONLoader alloc] initWithString:string] autorelease];
 }
 
-+(id)loaderWithPath:(NSString *)path
++ (id)loaderWithPath:(NSString *)path
 {
     return [[[PLJSONLoader alloc] initWithPath:path] autorelease];
 }
@@ -85,47 +82,44 @@
 #pragma mark -
 #pragma mark utility methods
 
--(void)loadJSON:(NSString *)jsonString
+- (void)loadJSON:(NSString *)jsonString
 {
-    if(jsonString)
-    {
+    if (jsonString) {
         NSObject *jsonObject = [jsonString objectFromJSONString];
-        if(jsonObject && [jsonObject isKindOfClass:[NSDictionary class]])
-        {
-            json = (NSDictionary *)[jsonObject retain];
+        if (jsonObject && [jsonObject isKindOfClass:[NSDictionary class]]) {
+            json = (NSDictionary *) [jsonObject retain];
             return;
         }
     }
     else
-        [NSException raise:@"PanoramaGL" format:@"JSON string is empty"];  
-    [NSException raise:@"PanoramaGL" format:@"JSON parse failed"];    
+        [NSException raise:@"PanoramaGL" format:@"JSON string is empty"];
+    [NSException raise:@"PanoramaGL" format:@"JSON parse failed"];
 }
 
--(NSString *)getResourcePath
+- (NSString *)getResourcePath
 {
     return [[NSBundle mainBundle] resourcePath];
 }
 
--(NSString *)getFilePath:(NSString *)filename urlbase:(NSString *)urlbase
+- (NSString *)getFilePath:(NSString *)filename urlbase:(NSString *)urlbase
 {
     BOOL isFullURL = ([filename rangeOfString:@"res://"].location != NSNotFound);
     return (isFullURL ? filename : [NSString stringWithFormat:@"%@/%@", urlbase, filename]);
 }
 
--(PLTexture *)createTexture:(NSString *)filename urlbase:(NSString *)urlbase
+- (PLTexture *)createTexture:(NSString *)filename urlbase:(NSString *)urlbase
 {
-    if(filename)
+    if (filename)
         return [PLTexture textureWithImage:[PLImage imageWithPath:[self getFilePath:filename urlbase:urlbase]]];
     return nil;
 }
 
--(void)loadCubicPanoramaTexture:(NSObject<PLIPanorama> *)panorama face:(PLCubeFaceOrientation)face images:(NSDictionary *)images property:(NSString *)property urlbase:(NSString *)urlbase
+- (void)loadCubicPanoramaTexture:(NSObject <PLIPanorama> *)panorama face:(PLCubeFaceOrientation)face images:(NSDictionary *)images property:(NSString *)property urlbase:(NSString *)urlbase
 {
-    if([[images allKeys] containsObject:property])
-    {
+    if ([[images allKeys] containsObject:property]) {
         PLTexture *texture = [self createTexture:[images objectForKey:property] urlbase:urlbase];
-        if(texture)
-            [(PLCubicPanorama *)panorama setTexture:texture face:face];
+        if (texture)
+            [(PLCubicPanorama *) panorama setTexture:texture face:face];
         else
             [NSException raise:@"PanoramaGL" format:@"images.%@ property wrong value", property];
     }
@@ -133,16 +127,14 @@
         [NSException raise:@"PanoramaGL" format:@"images.%@ property not exists", property];
 }
 
--(PLTexture *)createHotspotTexture:(NSString *)filename urlbase:(NSString *)urlbase
+- (PLTexture *)createHotspotTexture:(NSString *)filename urlbase:(NSString *)urlbase
 {
-    if(filename)
-    {
+    if (filename) {
         BOOL isFullURL = ([filename rangeOfString:@"res://"].location != NSNotFound);
         NSString *url = (isFullURL ? filename : [NSString stringWithFormat:@"%@/%@", urlbase, filename]);
-        if([[hotspotTextures allKeys] containsObject:url])
+        if ([[hotspotTextures allKeys] containsObject:url])
             return [hotspotTextures objectForKey:url];
-        else
-        {
+        else {
             PLTexture *texture = [PLTexture textureWithImage:[PLImage imageWithPath:url]];
             [hotspotTextures setValue:texture forKey:url];
             return texture;
@@ -154,82 +146,69 @@
 #pragma mark -
 #pragma mark load methods
 
--(void)load:(UIView<PLIView> *)view
+- (void)load:(UIView <PLIView> *)view
 {
-    if(json)
-    {
+    if (json) {
         NSString *urlbase = [json objectForKey:@"urlBase"];
-        if(urlbase && [urlbase isKindOfClass:[NSString class]] && [urlbase rangeOfString:@"res://"].location != NSNotFound)
-        {
+        if (urlbase && [urlbase isKindOfClass:[NSString class]] && [urlbase rangeOfString:@"res://"].location != NSNotFound) {
             NSString *path = [urlbase stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             path = [path stringByReplacingOccurrencesOfString:@"res://" withString:@""];
-            if(path && [path length] > 0)
+            if (path && [path length] > 0)
                 urlbase = [NSString stringWithFormat:@"%@/%@", [self getResourcePath], path];
             else
                 urlbase = [self getResourcePath];
         }
         else
             [NSException raise:@"PanoramaGL" format:@"urlBase property not exists"];
-        if(!urlbase)
+        if (!urlbase)
             [NSException raise:@"PanoramaGL" format:@"urlBase property is wrong"];
         NSString *type = [json objectForKey:@"type"];
-        NSObject<PLIPanorama> *panorama = nil;
+        NSObject <PLIPanorama> *panorama = nil;
         PLPanoramaType panoramaType = PLPanoramaTypeUnknow;
-        if(type && [type isKindOfClass:[NSString class]])
-        {
-            
-            if([type isEqualToString:@"spherical"])
-            {
+        if (type && [type isKindOfClass:[NSString class]]) {
+
+            if ([type isEqualToString:@"spherical"]) {
                 panoramaType = PLPanoramaTypeSpherical;
                 panorama = [[PLSphericalPanorama alloc] init];
             }
-            else if([type isEqualToString:@"spherical2"])
-            {
+            else if ([type isEqualToString:@"spherical2"]) {
                 panoramaType = PLPanoramaTypeSpherical2;
                 panorama = [[PLSpherical2Panorama alloc] init];
             }
-            else if([type isEqualToString:@"cubic"])
-            {
+            else if ([type isEqualToString:@"cubic"]) {
                 panoramaType = PLPanoramaTypeCubic;
                 panorama = [[PLCubicPanorama alloc] init];
             }
-            if(!panorama)
+            if (!panorama)
                 [NSException raise:@"PanoramaGL" format:@"Panorama type is wrong"];
         }
         else
             [NSException raise:@"PanoramaGL" format:@"type property not exists"];
         NSDictionary *images = [json objectForKey:@"images"];
-        if(images && [images isKindOfClass:[NSDictionary class]])
-        {
-            if([[images allKeys] containsObject:@"preview"])
-            {
+        if (images && [images isKindOfClass:[NSDictionary class]]) {
+            if ([[images allKeys] containsObject:@"preview"]) {
                 NSString *preview = [images objectForKey:@"preview"];
                 [panorama setPreviewImage:[PLImage imageWithPath:[NSString stringWithFormat:@"%@/%@", urlbase, preview]]];
             }
-            if(panoramaType == PLPanoramaTypeSpherical)
-            {
-                if([[images allKeys] containsObject:@"image"])
-                {
+            if (panoramaType == PLPanoramaTypeSpherical) {
+                if ([[images allKeys] containsObject:@"image"]) {
                     PLTexture *imageTexture = [self createTexture:[images objectForKey:@"image"] urlbase:urlbase];
-                    if(imageTexture)
-                        [(PLSphericalPanorama *)panorama setTexture:imageTexture];
+                    if (imageTexture)
+                        [(PLSphericalPanorama *) panorama setTexture:imageTexture];
                     else
                         [NSException raise:@"PanoramaGL" format:@"images.image property wrong value"];
                 }
                 else
                     [NSException raise:@"PanoramaGL" format:@"images.image property not exists"];
             }
-            else if(panoramaType == PLPanoramaTypeSpherical2)
-            {
-                if([[images allKeys] containsObject:@"image"])
-                {
-                    [(PLSpherical2Panorama *)panorama setImage:[PLImage imageWithPath:[self getFilePath:[images objectForKey:@"image"] urlbase:urlbase]]];
+            else if (panoramaType == PLPanoramaTypeSpherical2) {
+                if ([[images allKeys] containsObject:@"image"]) {
+                    [(PLSpherical2Panorama *) panorama setImage:[PLImage imageWithPath:[self getFilePath:[images objectForKey:@"image"] urlbase:urlbase]]];
                 }
                 else
                     [NSException raise:@"PanoramaGL" format:@"images.image property not exists"];
             }
-            else if(panoramaType == PLPanoramaTypeCubic)
-            {
+            else if (panoramaType == PLPanoramaTypeCubic) {
                 [self loadCubicPanoramaTexture:panorama face:PLCubeFaceOrientationFront images:images property:@"front" urlbase:urlbase];
                 [self loadCubicPanoramaTexture:panorama face:PLCubeFaceOrientationBack images:images property:@"back" urlbase:urlbase];
                 [self loadCubicPanoramaTexture:panorama face:PLCubeFaceOrientationLeft images:images property:@"left" urlbase:urlbase];
@@ -237,37 +216,33 @@
                 [self loadCubicPanoramaTexture:panorama face:PLCubeFaceOrientationUp images:images property:@"up" urlbase:urlbase];
                 [self loadCubicPanoramaTexture:panorama face:PLCubeFaceOrientationDown images:images property:@"down" urlbase:urlbase];
             }
-            else if(panoramaType == PLPanoramaTypeCylindrical)
-            {
-                if([[images allKeys] containsObject:@"image"])
-                {
+            else if (panoramaType == PLPanoramaTypeCylindrical) {
+                if ([[images allKeys] containsObject:@"image"]) {
                     PLTexture *imageTexture = [self createTexture:[images objectForKey:@"image"] urlbase:urlbase];
-                    if(imageTexture)
-                        [(PLCylindricalPanorama *)panorama setTexture:imageTexture];
+                    if (imageTexture)
+                        [(PLCylindricalPanorama *) panorama setTexture:imageTexture];
                     else
                         [NSException raise:@"PanoramaGL" format:@"images.image property wrong value"];
                 }
                 else
                     [NSException raise:@"PanoramaGL" format:@"images.image property not exists"];
             }
-            
+
         }
         else
             [NSException raise:@"PanoramaGL" format:@"images property not exists"];
-        
+
         NSDictionary *camera = [json objectForKey:@"camera"];
-        if(camera && [camera isKindOfClass:[NSDictionary class]])
-        {
+        if (camera && [camera isKindOfClass:[NSDictionary class]]) {
             NSArray *cameraKeys = [camera allKeys];
-            if([cameraKeys containsObject:@"athmin"] && [cameraKeys containsObject:@"athmax"] && [cameraKeys containsObject:@"atvmin"] && [cameraKeys containsObject:@"atvmax"] && [cameraKeys containsObject:@"hlookat"] && [cameraKeys containsObject:@"vlookat"])
-            {
+            if ([cameraKeys containsObject:@"athmin"] && [cameraKeys containsObject:@"athmax"] && [cameraKeys containsObject:@"atvmin"] && [cameraKeys containsObject:@"atvmax"] && [cameraKeys containsObject:@"hlookat"] && [cameraKeys containsObject:@"vlookat"]) {
                 PLCamera *currentCamera = panorama.currentCamera;
-                int athmin = [(NSNumber *)[camera objectForKey:@"athmin"] intValue];
-                int athmax = [(NSNumber *)[camera objectForKey:@"athmax"] intValue];
-                int atvmin = [(NSNumber *)[camera objectForKey:@"atvmin"] intValue];
-                int atvmax = [(NSNumber *)[camera objectForKey:@"atvmax"] intValue];
-                int hlookat = [(NSNumber *)[camera objectForKey:@"hlookat"] intValue];
-                int vlookat = [(NSNumber *)[camera objectForKey:@"vlookat"] intValue];
+                int athmin = [(NSNumber *) [camera objectForKey:@"athmin"] intValue];
+                int athmax = [(NSNumber *) [camera objectForKey:@"athmax"] intValue];
+                int atvmin = [(NSNumber *) [camera objectForKey:@"atvmin"] intValue];
+                int atvmax = [(NSNumber *) [camera objectForKey:@"atvmax"] intValue];
+                int hlookat = [(NSNumber *) [camera objectForKey:@"hlookat"] intValue];
+                int vlookat = [(NSNumber *) [camera objectForKey:@"vlookat"] intValue];
                 currentCamera.pitchRange = PLRangeMake(atvmin, atvmax);
                 currentCamera.yawRange = PLRangeMake(athmin, athmax);
                 [currentCamera setInitialLookAtWithPitch:vlookat yaw:hlookat];
@@ -276,23 +251,19 @@
                 [NSException raise:@"PanoramaGL" format:@"camera properties are wrong"];
         }
         NSArray *hotspots = [json objectForKey:@"hotspots"];
-        if(hotspots && [hotspots isKindOfClass:[NSArray class]])
-        {
+        if (hotspots && [hotspots isKindOfClass:[NSArray class]]) {
             NSUInteger hotspotsCount = [hotspots count];
-            for(NSUInteger i = 0; i < hotspotsCount; i++)
-            {
+            for (NSUInteger i = 0; i < hotspotsCount; i++) {
                 NSDictionary *hotspot = [hotspots objectAtIndex:i];
-                if(hotspot && [hotspot isKindOfClass:[NSDictionary class]])
-                {
+                if (hotspot && [hotspot isKindOfClass:[NSDictionary class]]) {
                     NSArray *hotspotKeys = [hotspot allKeys];
-                    if([hotspotKeys containsObject:@"id"] && [hotspotKeys containsObject:@"image"] && [hotspotKeys containsObject:@"atv"] && [hotspotKeys containsObject:@"ath"] && [hotspotKeys containsObject:@"width"] && [hotspotKeys containsObject:@"height"])
-                    {
+                    if ([hotspotKeys containsObject:@"id"] && [hotspotKeys containsObject:@"image"] && [hotspotKeys containsObject:@"atv"] && [hotspotKeys containsObject:@"ath"] && [hotspotKeys containsObject:@"width"] && [hotspotKeys containsObject:@"height"]) {
                         PLTexture *hotspotTexture = [self createHotspotTexture:[hotspot objectForKey:@"image"] urlbase:urlbase];
-                        int identifier = [(NSNumber *)[hotspot objectForKey:@"id"] intValue];
-                        int atv = [(NSNumber *)[hotspot objectForKey:@"atv"] intValue];
-                        int ath = [(NSNumber *)[hotspot objectForKey:@"ath"] intValue];
-                        float width = [(NSNumber *)[hotspot objectForKey:@"width"] floatValue];
-                        float height = [(NSNumber *)[hotspot objectForKey:@"height"] floatValue];
+                        int identifier = [(NSNumber *) [hotspot objectForKey:@"id"] intValue];
+                        int atv = [(NSNumber *) [hotspot objectForKey:@"atv"] intValue];
+                        int ath = [(NSNumber *) [hotspot objectForKey:@"ath"] intValue];
+                        float width = [(NSNumber *) [hotspot objectForKey:@"width"] floatValue];
+                        float height = [(NSNumber *) [hotspot objectForKey:@"height"] floatValue];
                         PLHotspot *currentHotspot = [PLHotspot hotspotWithId:identifier texture:hotspotTexture atv:atv ath:ath];
                         [currentHotspot setWidth:width];
                         [currentHotspot setHeight:height];
@@ -302,7 +273,7 @@
             }
         }
         [view setPanorama:panorama];
-        if([[json allKeys] containsObject:@"sensorialRotation"] && [(NSNumber *)[json objectForKey:@"sensorialRotation"] boolValue])
+        if ([[json allKeys] containsObject:@"sensorialRotation"] && [(NSNumber *) [json objectForKey:@"sensorialRotation"] boolValue])
             [view startSensorialRotation];
         [view startAnimation];
         [panorama release];
@@ -312,11 +283,11 @@
 #pragma mark -
 #pragma mark dealloc methods
 
--(void)dealloc
+- (void)dealloc
 {
-    if(json)
+    if (json)
         [json release];
-    if(hotspotTextures)
+    if (hotspotTextures)
         [hotspotTextures release];
     [super dealloc];
 }
