@@ -112,17 +112,77 @@
     return NO;
 }
 
++ (BOOL)checkCollisionWithRay:(PLVector3 **)ray point1:(PLVector3 *)v0 point2:(PLVector3 *)v1 point3:(PLVector3 *)v2 hitPoint:(PLVector3 **)hitPoint
+{
+    PLVector3 *point = [self intersectionWithRay:ray point1:v0 point2:v1 point3:v2];
+    if (point) {
+        if ([self point:point inTrianglePoint1:v0 point2:v1 point3:v2]) {
+            *hitPoint = point;
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
+#define crossProduct(a,b,c) \
+    a.x = (b.y * c.z) - (c.y * b.z); \
+    a.y = (b.z * c.x) - (c.z * b.x); \
+    a.z = (b.x * c.y) - (c.x * b.y);
+
+#define dotProduct(v,q) (v.x * q.x) + (v.y * q.y) + (v.z * q.z)
+#define createVector(a,b) [PLVector3 vector3WithX:b.x - a.x y:b.y - a.y z:b.z - a.z]
+#define normalizeVector(a) {float d = sqrt(a.x*a.x + a.y*a.y + a.z*a.z); a.x/=d; a.y/=d; a.z/=d;}
+
++ (BOOL)point:(PLVector3 *)p4 inTrianglePoint1:(PLVector3 *)p1 point2:(PLVector3 *)p2 point3:(PLVector3 *)p3
+{
+    PLVector3 *p12 = createVector(p1,p2);
+    PLVector3 *p13 = createVector(p1,p3);
+    PLVector3 *p14 = createVector(p1,p4);
+
+    float dot00 = dotProduct(p13, p13);
+    float dot01 = dotProduct(p13, p12);
+    float dot02 = dotProduct(p13, p14);
+    float dot11 = dotProduct(p12, p12);
+    float dot12 = dotProduct(p12, p14);
+
+    float inverseDenominator = (1 / (dot00*dot11 - dot01*dot01));
+
+    float u = (dot11 * dot02 - dot01*dot12) * inverseDenominator;
+    float v = (dot00 * dot12 - dot01*dot02) * inverseDenominator;
+
+    return u >= 0 && v >= 0 && u + v < 1;
+}
+
++ (PLVector3 *)intersectionWithRay:(PLVector3 **)ray point1:(PLVector3 *)a point2:(PLVector3 *)b point3:(PLVector3 *)c
+{
+    PLVector3 *x = ray[0];
+    PLVector3 *y = ray[1];
+    PLVector3 *n = [PLVector3 vector3];
+    PLVector3 *ab = createVector(a, b);
+    PLVector3 *ac = createVector(a, c);
+    crossProduct(n, ab, ac);
+    normalizeVector(n);
+
+    PLVector3 *v = createVector(x, a);
+    PLVector3 *w = createVector(x, y);
+    float d = dotProduct(n, v);
+    float e = dotProduct(n, w);
+
+    if (fabsf(e) > 0.001) {
+        return [PLVector3 vector3WithX:x.x + w.x*d/e y:x.y + w.y*d/e z:x.z + w.z*d/e];
+    }
+
+    return nil;
+}
+
 + (BOOL)checkLineBoxWithRay:(PLVector3 **)ray point1:(PLVector3 *)point1 point2:(PLVector3 *)point2 point3:(PLVector3 *)point3 point4:(PLVector3 *)point4 hitPoint:(PLVector3 **)hitPoint
 {
-    if (
-            [PLIntersection checkLineBoxWithRay:ray startBound:point1 endBound:point4 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point4 endBound:point1 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point2 endBound:point3 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point3 endBound:point2 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point1 endBound:point3 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point3 endBound:point1 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point1 endBound:point2 hitPoint:hitPoint] ||
-                    [PLIntersection checkLineBoxWithRay:ray startBound:point2 endBound:point1 hitPoint:hitPoint]
+
+    if ( [self checkCollisionWithRay:ray point1:point1 point2:point2 point3:point3 hitPoint:hitPoint] ||
+            [self checkCollisionWithRay:ray point1:point1 point2:point2 point3:point4 hitPoint:hitPoint] ||
+            [self checkCollisionWithRay:ray point1:point1 point2:point3 point3:point4 hitPoint:hitPoint] ||
+            [self checkCollisionWithRay:ray point1:point2 point2:point3 point3:point4 hitPoint:hitPoint]
             )
         return YES;
     return NO;
