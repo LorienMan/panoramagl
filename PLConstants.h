@@ -174,5 +174,5 @@
 #pragma mark hotspot consts
 
 #define kDefaultHotspotSize            0.05f
-#define kDefaultHotspotAlpha        0.8f
+#define kDefaultHotspotAlpha        0.5f
 #define kDefaultHotspotOverAlpha    1.0f
