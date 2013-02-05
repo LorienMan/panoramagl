@@ -130,9 +130,10 @@
     a.y = (b.z * c.x) - (c.z * b.x); \
     a.z = (b.x * c.y) - (c.x * b.y);
 
-#define dotProduct(v,q) (v.x * q.x) + (v.y * q.y) + (v.z * q.z)
+#define dotProduct(v,q) ((v.x * q.x) + (v.y * q.y) + (v.z * q.z))
 #define createVector(a,b) [PLVector3 vector3WithX:b.x - a.x y:b.y - a.y z:b.z - a.z]
-#define normalizeVector(a) {float d = sqrt(a.x*a.x + a.y*a.y + a.z*a.z); a.x/=d; a.y/=d; a.z/=d;}
+#define vectorLength(a) sqrt(a.x*a.x + a.y*a.y + a.z*a.z)
+#define normalizeVector(a) {float d = vectorLength(a); a.x/=d; a.y/=d; a.z/=d;}
 
 + (BOOL)point:(PLVector3 *)p4 inTrianglePoint1:(PLVector3 *)p1 point2:(PLVector3 *)p2 point3:(PLVector3 *)p3
 {
@@ -158,6 +159,15 @@
 {
     PLVector3 *x = ray[0];
     PLVector3 *y = ray[1];
+    PLVector3 *w = createVector(x, y);
+    PLVector3 *toBegin = createVector(x, a);
+    
+    CGFloat cos = dotProduct(w, toBegin) / vectorLength(w) / vectorLength(toBegin);
+    
+    if (cos < 0 )
+        return nil;
+    
+    
     PLVector3 *n = [PLVector3 vector3];
     PLVector3 *ab = createVector(a, b);
     PLVector3 *ac = createVector(a, c);
@@ -165,7 +175,6 @@
     normalizeVector(n);
 
     PLVector3 *v = createVector(x, a);
-    PLVector3 *w = createVector(x, y);
     float d = dotProduct(n, v);
     float e = dotProduct(n, w);
 
